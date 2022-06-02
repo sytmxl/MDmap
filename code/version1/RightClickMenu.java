@@ -558,7 +558,6 @@ class ThemeStateChange implements ActionListener {
 		Vector<ThemeLabel> child=source.getallChild();
 		if(child.size()!=0){
 			for(ThemeLabel temp:child){
-				
 				copyAllSon(temp,copyTo);
 			}
 		}				
