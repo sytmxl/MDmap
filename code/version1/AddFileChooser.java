@@ -61,7 +61,12 @@ public class AddFileChooser implements ActionListener{
 			if(result == JFileChooser.APPROVE_OPTION) {//选择了确定键
 				file = fileChooser.getSelectedFile();
 				System.out.println(file.getName());
-				saveFile(file);//调用保存文件的功能函数
+				//saveFile2();
+				try {
+					saveFile(file);//调用保存文件的功能函数
+				} catch (IOException ex) {
+					throw new RuntimeException(ex);
+				}
 			}else if(result == JFileChooser.CANCEL_OPTION) {//选择了取消键
 				
 			}else if(result == JFileChooser.ERROR_OPTION) {//出错了
@@ -99,7 +104,7 @@ public class AddFileChooser implements ActionListener{
 		ObjectInputStream ois=null;
 		try {
 			ois =new ObjectInputStream(new FileInputStream(file));//建立对象输入流
-			MainWindow.pan.setrootThemeLabel((ThemeLabel) ois.readObject());//读入根主题		
+			MainWindow.pan.setrootThemeLabel((ThemeLabel) ois.readObject());//读入根主题
 			MainWindow.pan.setallConnectLine((HashMap<ThemeLabel, ConnectLine>)(ois.readObject()));//读入HashMap
 			
 			MainWindow.pan.getrootThemeLabel().getMyThemeFrame().getButton1().addActionListener(new ThemeFrameActionListener(MainWindow.pan.getrootThemeLabel().getMyThemeFrame()));//根主题所属内容修改窗口的确认按钮加入事件监听
@@ -171,7 +176,7 @@ public class AddFileChooser implements ActionListener{
 	}
 
 
-    void saveFile(File file){
+    void saveFile(File file) throws IOException {
     	if(file!=null&&file.getName().endsWith(".umind")){
 			ObjectOutputStream oos=null;//创建输出流
 			try {
@@ -206,6 +211,12 @@ public class AddFileChooser implements ActionListener{
 					e1.printStackTrace();
 				}
 			}
+		}
+		else if (file!=null&&file.getName().endsWith(".md")){
+			FileWriter fw = new FileWriter(file);
+			BufferedWriter out = new BufferedWriter(fw);
+			MainWindow.pan.getrootThemeLabel().toText(out, "#");
+			out.flush();
 		}
     }
 }

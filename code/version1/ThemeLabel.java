@@ -5,6 +5,8 @@ package version1;
 
 import java.awt.*;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.*;
 import javax.swing.*;
 /**
@@ -91,7 +93,7 @@ public class ThemeLabel extends JLabel {
 		this.ThemeMidY = y + Constent.ThemeSizeY / 2;
 
 		this.setFont(Constent.themeFont);
-		this.setText("主题");
+		this.setText("text");
 		this.setBounds(x, y, this.ThemeSizeX, this.ThemeSizeY);
 		
 		this.setStyle();
@@ -130,7 +132,6 @@ public class ThemeLabel extends JLabel {
 		this.setBounds(x, y, this.ThemeSizeX, this.ThemeSizeY);
 	}
 
-
 	public void updateSize() {
 		int deltaSizeX = this.getNewLength() - this.ThemeSizeX;
 		int deltaSizeY = 0;
@@ -145,7 +146,6 @@ public class ThemeLabel extends JLabel {
 			this.ThemeRightX = this.getX() + this.ThemeSizeX;
 			this.setBounds(this.getX(), this.getY(), this.ThemeSizeX, this.ThemeSizeY);
 		}
-
 	}
 
 	public int getNewLength() {
@@ -315,9 +315,33 @@ public class ThemeLabel extends JLabel {
 		}
 	}
 	public void setStyle() {
-		
 		this.setBorder(BorderFactory.createLineBorder(ThemeChooser.LocalStyle.getbdcolor(),4,true));
 		this.setBackground(ThemeChooser.LocalStyle.getbkgcolor());	
 		this.setForeground(ThemeChooser.LocalStyle.gettxtcolor());
+	}
+
+	public void toText(BufferedWriter out, String level) throws IOException {
+		if (this.child == null && level.endsWith("#")) {
+			out.write(this.getText() + '\n');
+		}
+		else if (this.child == null && level.endsWith("- ")) {
+			out.write(level + this.getText() + '\n');
+		}
+		else {
+			out.write(level + " "+this.getText() + '\n');
+			for (ThemeLabel label : child) {
+				if(level.endsWith("#")) {
+					if(level.length()<=6) {
+						label.toText(out, level+"#");
+					}
+					else {
+						label.toText(out, "- ");
+					}
+				}
+				else { // 超过六个#使用点层次
+					label.toText(out, "  " + level);
+				}
+			}
+		}
 	}
 }
