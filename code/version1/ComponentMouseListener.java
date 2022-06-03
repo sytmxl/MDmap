@@ -120,6 +120,7 @@ class ComponentMouseListener implements MouseInputListener {
 			/******* 双击并且不为绘制曲线模式 ********/
 			else if (e.getClickCount() == 2 && !PaintePanel.rightClickMenu.getisCureLine())// 双击
 			{
+				System.out.println("double click");
 				/******** 关闭其它备注窗口 *******/
 				for (Entry<ThemeLabel, ConnectLine> item : MainWindow.pan.getallConnectLine().entrySet()) {
 					ThemeLabel key = item.getKey();

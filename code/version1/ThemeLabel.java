@@ -285,14 +285,14 @@ public class ThemeLabel extends JLabel {
 		if(this == MainWindow.pan.getrootThemeLabel()) {
 			return -1;
 		}
-		else if(this.father == null)
-		{
+		else if(this.father == null) {
 			return 0;
-		}else if(this.father.father ==null)
-		{
+		}
+		else if(this.father.father ==null) {
 			return 1;
-		}else {
-			return 2;
+		}
+		else {
+			return this.father.getRank() + 1;
 		}
 	}
 	public void setRank(int Rank)
@@ -309,7 +309,7 @@ public class ThemeLabel extends JLabel {
 			case 1:
 				this.setBorder(BorderFactory.createLineBorder(ThemeChooser.LocalStyle.getbdcolor(),4,true));
 				break;				
-			case 2:
+			default:
 				this.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeChooser.LocalStyle.getBtncolor()));
 				break;
 		}

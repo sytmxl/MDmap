@@ -8,6 +8,8 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.io.File;
 import javax.swing.*;
@@ -122,7 +124,13 @@ public class MainWindow {
 		//清除所有的动作监听
 		clearAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddFileChooser.loadFile(new File(Constent.imagesPath+"other\\origin.umind"));
+				try {
+					AddFileChooser.loadFile(new File(Constent.imagesPath+"other\\origin.umind"));
+				} catch (FileNotFoundException ex) {
+					throw new RuntimeException(ex);
+				} catch (IOException ex) {
+					throw new RuntimeException(ex);
+				}
 			}
 		});
 		menuFile.add(openFile);
