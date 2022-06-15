@@ -54,21 +54,28 @@ public class MainWindow {
         Box line2 = Box.createHorizontalBox();
         JButton i_open = toolButton("open.png", "Open", "打开文件");
         i_open.addActionListener(addlistener);
-        JButton i_save = toolButton("save.png", "Save", "保存");
+        JButton i_save = toolButton("md.png", "Save", "导出为md文件");
         i_save.addActionListener(savelistener);
+        JButton i_saveXmind = toolButton("xmind.png", "Save", "导出为xmind文件");
         JButton i_add = toolButton("add.png", "New", "新建");
         i_add.addActionListener(buttonMouseListener);
         JButton i_delete = toolButton("delete.png", "Delete", "删除");
         i_delete.addActionListener(deleteThemeListener);
+        JButton i_edit = toolButton("edit.png", "Edit", "编辑文本");
+        i_edit.addActionListener(editTextListener);
         JButton i_clear = toolButton("clear.png", "Clear", "清空");
         i_clear.addActionListener(clearListener);
+        JButton i_picture = toolButton("picture.png", "Picture", "导出图片");
 
 
         toolBar.add(i_open);
         toolBar.add(i_save);
+        toolBar.add(i_saveXmind);
         toolBar.add(i_add);
         toolBar.add(i_delete);
+        toolBar.add(i_edit);
         toolBar.add(i_clear);
+        toolBar.add(i_picture);
         line2.add(Box.createHorizontalStrut(0));
         line2.add(toolBar);
         toolBar.setMaximumSize(new Dimension(9999, 60));
@@ -113,6 +120,7 @@ public class MainWindow {
     SaveFileChooser savelistener=new SaveFileChooser();
     ButtonMouseListener buttonMouseListener = new ButtonMouseListener();
     DeleteThemeListener deleteThemeListener=new DeleteThemeListener();
+    EditTextListener editTextListener=new EditTextListener();
     ClearListener clearListener=new ClearListener();
     ActionListener listener = new ActionListener() {
 
