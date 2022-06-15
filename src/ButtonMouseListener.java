@@ -71,10 +71,11 @@ public class ButtonMouseListener implements ActionListener { //添加节点
 
     static public ThemeLabel add(String text, int rank, int yPlus){
         int x,y;
+        int xShift = 100;
         if (fatherLabel == MainWindow.pan.getRootThemeLabel() || fatherLabel == null) {//如果是根节点的子节点
             x = MainWindow.pan.getRootThemeLabelRightX();
             y = MainWindow.pan.getRootThemeLabelTopY();
-            ThemeLabel themeLabel = new ThemeLabel(x + 40, y + yPlus, text, rank);
+            ThemeLabel themeLabel = new ThemeLabel(x + xShift, y + yPlus, text, rank);
             MainWindow.pan.add(themeLabel);
             /******** 增加父子节点关联 ************/
             themeLabel.setFather(MainWindow.pan.getRootThemeLabel());
@@ -94,7 +95,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
             if (distance < 0) {
                 x = fatherLabel.getThemeLeftX();
                 y = fatherLabel.getThemeTopY();
-                ThemeLabel themeLabel = new ThemeLabel(x - 40, y + yPlus, text, rank);
+                ThemeLabel themeLabel = new ThemeLabel(x - xShift, y + yPlus, text, rank);
                 MainWindow.pan.add(themeLabel);
                 /******** 增加父子节点关联 ************/
                 themeLabel.setFather(fatherLabel);
@@ -111,7 +112,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
             else {
                 x = fatherLabel.getThemeRightX();
                 y = fatherLabel.getThemeTopY();
-                ThemeLabel themeLabel = new ThemeLabel(x + 40, y + yPlus, text, rank);
+                ThemeLabel themeLabel = new ThemeLabel(x + xShift, y + yPlus, text, rank);
                 /******** 增加父子节点关联 ************/
                 themeLabel.setFather(fatherLabel);
                 fatherLabel.addChild(themeLabel);

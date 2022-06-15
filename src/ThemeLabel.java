@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Vector;
 public class ThemeLabel extends JLabel{
+    public float from;
     /******* 父亲孩子 *****/
     private ThemeLabel father=null;
     private Vector<ThemeLabel> child = null;
@@ -17,7 +18,7 @@ public class ThemeLabel extends JLabel{
     /********* 定位尺寸 ********/
     private int ThemeSizeX = 70;
     private int ThemeSizeY = 50;
-    private int ThemeLeftX, ThemeRightX, ThemeMidY,ThemeTopY;
+    private int ThemeLeftX, ThemeRightX, ThemeMidY, ThemeTopY;
 
     /********* 节点删除 ********/
     public boolean isLive = true;
@@ -59,11 +60,20 @@ public class ThemeLabel extends JLabel{
 
         this.ThemeTopY=y;
         this.ThemeMidY = y + ThemeSizeY / 2;
+        /*
+        this.ThemeLeftX = x - ThemeSizeX;
+        this.ThemeRightX = x;
+
+        this.ThemeTopY= y + ThemeSizeY / 2;
+        this.ThemeMidY = y;
+
+         */
 
         this.LabelName=names;
         names++;
 
         this.setText(text);
+        //this.updateSize();
         this.setRank(rank);
         this.setBounds(x, y, this.ThemeSizeX, this.ThemeSizeY);
 
@@ -142,13 +152,14 @@ public class ThemeLabel extends JLabel{
             this.ThemeSizeX+=80;
             this.ThemeRightX = this.getX() + ThemeSizeX;
             this.ThemeMidY = this.getY() + ThemeSizeY / 2;
-        }else if(rank==1){
+        }
+        else if(rank == 1){
             this.ThemeSizeY+=30;
             this.ThemeSizeX+=50;
             this.ThemeRightX = this.getX() + ThemeSizeX;
             this.ThemeMidY = this.getY() + ThemeSizeY / 2;
         }
-
+        //默认最小 有以上情况加大
         this.setBounds(this.getX(),this.getY(),this.ThemeSizeX,this.ThemeSizeY);
     }
 
@@ -240,5 +251,9 @@ public class ThemeLabel extends JLabel{
         for (ThemeLabel themeLabel : child) {
             themeLabel.toTextForXmind(texts, tabs+1);
         }
+    }
+
+    public int getThemeMidX() {
+        return this.ThemeSizeX/2 + this.getThemeLeftX();
     }
 }

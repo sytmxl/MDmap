@@ -100,51 +100,89 @@ public class AddFileChooser implements ActionListener {
                 y += yGap;
             }
 
-            System.out.println("Tablist:");
+            // 获取每个标签所占列数
+            TabText bufferTabText = null;
+            Stack<TabText> tabTexts = new Stack<>();
+            int chance = 1;
+            for (TabText tabText : texts.list) {
+                if (chance == 1) {
+                    bufferTabText = tabText;
+                    chance--;
+                    continue;
+                }
+                if (bufferTabText != null) {
+                    if (tabText.tabs > bufferTabText.tabs) {
+                        tabTexts.push(bufferTabText);
+                    }
+                    else if (tabText.tabs < bufferTabText.tabs) {
+                        while (tabTexts.peek().tabs >= tabText.getTabs()) {
+                            tabTexts.pop();
+                        }
+                    }
+                }
+                if (tabText.tabs <= bufferTabText.tabs) {
+                    for (TabText tabText1 : tabTexts) {
+                        tabText1.n++;
+                    }
+                }
+
+                bufferTabText = tabText;
+            }
+
+            System.out.println("n:");
             for (TabText text : texts.list){
-                System.out.println(text.tabs+text.content);
+                text.from = (float) -(text.n - 1)/2;
+                System.out.println("from: "+text.from+" tabs: "+text.tabs+" content: "+text.content);
             }
 
             System.out.println("load md file");
-            x=y=0;
             int buffergap = 1;
+            int yShift;
+            float from=0;
             ThemeLabel bufferThemeLabel = null;
             ButtonMouseListener.fatherLabel = null;
             Stack<ThemeLabel> fatherList = new Stack<>();
             for (TabText text : texts.list){
-                    if (ButtonMouseListener.fatherLabel == null) {
+                    if (ButtonMouseListener.fatherLabel == null) {//第一个
                         MainWindow.pan.getRootThemeLabel().setText(text.content);
                         bufferThemeLabel = MainWindow.pan.getRootThemeLabel();
-                        //MainWindow.pan.setRootThemeLabel(bufferThemeLabel);
+                        bufferTabText = text;
 
                         fatherList.add(bufferThemeLabel);
                         ButtonMouseListener.fatherLabel = bufferThemeLabel;
+                        bufferThemeLabel.from = text.from;
 
                         System.out.println("1");
                         continue;
                     }
-                    if (text.tabs - fatherList.peek().getRank() > buffergap) {
+                    if (text.tabs > bufferTabText.tabs) {//当前级数大于上个
+                        bufferThemeLabel.from = bufferTabText.from;
                         fatherList.add(bufferThemeLabel);
                         ButtonMouseListener.fatherLabel = fatherList.peek();
 
                         System.out.print("2 ");
-                        y=0;
                     }
-                    else if (text.tabs - fatherList.peek().getRank() < buffergap) {
-                        fatherList.pop();
+                    else if (text.tabs < bufferTabText.tabs) {//当前级数小于上个
+                        while (text.tabs <= fatherList.peek().getRank()){
+                            fatherList.pop();
+                        }
+
                         ButtonMouseListener.fatherLabel = fatherList.peek();
 
                         System.out.print("3 ");
-                        y=0;
                     }
                     else {
-                        y++;
+                        System.out.print("0 ");
                     }
-                    bufferThemeLabel = ButtonMouseListener.add(text.content, text.getTabs(), y * yGap);
-                    System.out.print("sub: ");
-                    System.out.println(text.tabs - fatherList.peek().getRank());
-                }
+                    yShift = (int) ((fatherList.peek().from + (text.n - 1)/2) * yGap);
+                    bufferThemeLabel = ButtonMouseListener.add(text.content, text.getTabs(), yShift);
 
+                    System.out.print(text.content+" ");
+                    System.out.println((fatherList.peek().from + (float) (text.n - 1)/2));
+
+                    fatherList.peek().from += text.n;
+                    bufferTabText = text;
+                }
         }
         else if (file.getName().endsWith(".xmind")) {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -187,14 +225,14 @@ public class AddFileChooser implements ActionListener {
                     ButtonMouseListener.fatherLabel = fatherList.peek();
 
                     System.out.print("2 ");
-                    y=0;
+                    //y=0;
                 }
                 else if (text.tabs - fatherList.peek().getRank() < buffergap) {
                     fatherList.pop();
                     ButtonMouseListener.fatherLabel = fatherList.peek();
 
                     System.out.print("3 ");
-                    y=0;
+                    //y=0;
                 }
                 else {
                     y++;

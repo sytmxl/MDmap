@@ -77,6 +77,9 @@ class PaintePanel extends JPanel implements Runnable{
     public int getRootThemeLabelMidY() {return this.rootThemeLabel.getThemeMidY();}
     public int getRootThemeLabelTopY() {return this.rootThemeLabel.getThemeTopY();}
     public int getRootThemeLabelRightX(){return this.rootThemeLabel.getThemeRightX();}
+    public int getRootThemeLabelMidX() {
+        return this.rootThemeLabel.getThemeLeftX() + this.rootThemeLabel.getThemeSizeX()/2;
+    }
     public ThemeLabel getRootThemeLabel(){
         return rootThemeLabel;
     }
@@ -109,4 +112,6 @@ class PaintePanel extends JPanel implements Runnable{
     public void setRootThemeLabel(ThemeLabel themeLabel) {
         this.rootThemeLabel = themeLabel;
     }
+
+
 }
