@@ -79,7 +79,7 @@ public class SaveFileChooser implements ActionListener {
         }
         else if (file!=null&&file.getName().endsWith(".xmind")){
             Texts texts = new Texts();
-            MainWindow.pan.getRootThemeLabel().toTextForXmind(texts, 0);
+            MainWindow.pan.getRootThemeLabel().toTexts(texts, 0);
             // get workbook
             IWorkbookBuilder workbookBuilder = Core.getWorkbookBuilder();
             IWorkbook workbook = workbookBuilder.createWorkbook();
@@ -102,8 +102,7 @@ public class SaveFileChooser implements ActionListener {
             //workbook.save(file.getName());
             OutputStream outputStream = new FileOutputStream(file);
             workbook.save(outputStream);
+            outputStream.close();
         }
-
-
     }
 }

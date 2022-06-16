@@ -32,8 +32,8 @@ public class ButtonMouseListener implements ActionListener { //添加节点
             /******** 增加连线 ************/
             ConnectLine connectLine = new ConnectLine(MainWindow.pan.getRootThemeLabelRightX(), MainWindow.pan.getRootThemeLabelMidY(), themeLabel.getThemeLeftX(), themeLabel.getThemeMidY());
             MainWindow.pan.addConnectLine(themeLabel, connectLine);//入度和连接线,子节点只能有一个入度
-
-        } else {
+        }
+        else {
             int distance = fatherLabel.getThemeLeftX() - MainWindow.pan.getRootThemeLabelRightX();
             if (distance < 0) {
                 x = fatherLabel.getThemeLeftX();
@@ -65,8 +65,13 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 ConnectLine connectLine = new ConnectLine(fatherLabel.getThemeRightX(), fatherLabel.getThemeMidY(), themeLabel.getThemeLeftX(), themeLabel.getThemeMidY());
                 MainWindow.pan.addConnectLine(themeLabel, connectLine);//入度和连接线,子节点只能有一个入度
             }
-            fatherLabel = null;
+            //fatherLabel = null;
         }
+        //自动排版
+        Texts texts = new Texts();
+        MainWindow.pan.getRootThemeLabel().toTexts(texts, 0);
+        MainWindow.pan.clearConnectLine();
+        texts.toThemes();
     }
 
     static public ThemeLabel add(String text, int tabs, int yPlus, boolean left){
