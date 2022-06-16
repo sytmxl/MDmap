@@ -62,6 +62,7 @@ public class MainWindow {
         JButton i_save = toolButton("md.png", "Save", "导出为md文件");
         i_save.addActionListener(savelistener);
         JButton i_saveXmind = toolButton("xmind.png", "Save", "导出为xmind文件");
+        i_saveXmind.addActionListener(xmindlistener);
         JButton i_add = toolButton("add.png", "New", "新建");
         i_add.addActionListener(buttonMouseListener);
         JButton i_delete = toolButton("delete.png", "Delete", "删除");
@@ -71,7 +72,7 @@ public class MainWindow {
         JButton i_clear = toolButton("clear.png", "Clear", "清空");
         i_clear.addActionListener(clearListener);
         JButton i_picture = toolButton("picture.png", "Picture", "导出图片");
-
+        i_picture.addActionListener(pictureListener);
 
         toolBar.add(i_open);
         toolBar.add(i_save);
@@ -127,8 +128,9 @@ public class MainWindow {
     DeleteThemeListener deleteThemeListener=new DeleteThemeListener();
     EditTextListener editTextListener=new EditTextListener();
     ClearListener clearListener=new ClearListener();
+    PictureListener pictureListener=new PictureListener();
+    XmindListener xmindlistener=new XmindListener();
     ActionListener listener = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e)
         {
@@ -136,6 +138,7 @@ public class MainWindow {
             String action = e.getActionCommand();
             //通过对话框打印
             JOptionPane.showMessageDialog(frame, action);
+
         }
 
     };

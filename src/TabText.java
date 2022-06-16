@@ -8,9 +8,8 @@ public class TabText {
     int tabs;
     String content;
     Texts texts;
-
+    boolean left;
     int n;
-
     float from;
 
     public int getTabs() {
@@ -30,6 +29,8 @@ public class TabText {
         this.content = content;
         this.texts = texts;
         this.n=1;
+        this.left=false;
+        this.from = 0.1F;
     }
 
     public ITopic toTopic(IWorkbook workbook) {
@@ -47,9 +48,4 @@ public class TabText {
         }
         return topic;
     }
-
-    public void setN() {
-
-    }
-
 }

@@ -42,147 +42,76 @@ public class AddFileChooser implements ActionListener {
 
     public static void loadFile(File file) throws IOException, CoreException {
         MainWindow.pan.clearConnectLine();//clear panel
-        MainWindow.pan.getRootThemeLabel().updateLocation(300, 100);//location
+        MainWindow.pan.getRootThemeLabel().updateLocation(600, 300);//location
 
         if (file.getName().endsWith(".md")) {
             FileReader fr = new FileReader(file);
             BufferedReader in = new BufferedReader(fr);
             String content = in.readLine();
 
-            int x=0, y=0;
-            int yGap = 100;
-            int xGap = 20;
             // 相对权重标准
             int last=0;
             Texts texts = new Texts();
 
             MainWindow.pan.clearConnectLine();
+            boolean code = false;
             while (content != null) {
-
+                Matcher matcher5 = Pattern.compile("```").matcher(content);//代码段跳过
+                if (matcher5.find()) {
+                    if (code) {
+                        code = false;
+                        content = in.readLine();
+                        continue;
+                    }
+                    else {
+                        code = true;
+                    }
+                }
                 //md文本语法分析
                 if (Pattern.compile("^\\s*$").matcher(content).matches() ||
-                        Pattern.compile("^\\s*!\\[").matcher(content).find()) {
-                    System.out.println("blank");
+                        Pattern.compile("^\\s*!\\[").matcher(content).find() || code) {
+                    //System.out.println("blank");
                     content = in.readLine();
                     continue;
                 }
 
-                //themeLabel = new ThemeLabel(x * xGap, y);
+                Matcher matcher4 = Pattern.compile("^> ").matcher(content);//去除"> "
+                if (matcher4.find()) {
+                    content = content.substring(2);
+                }
+
+                Matcher matcher6 = Pattern.compile("^>").matcher(content);//去除单行">"
+                if (matcher6.find()) {
+                    content = in.readLine();
+                    continue;
+                }
 
                 Matcher matcher1 = Pattern.compile("^\\s*- ").matcher(content);
                 Matcher matcher2 = Pattern.compile("^#+ ").matcher(content);
+                Matcher matcher3 = Pattern.compile("^\\s*\\* ").matcher(content);
+
                 if (matcher1.find()) {
                     System.out.println((last + matcher1.end()) + " " + content.substring(matcher1.end()));
-                    x = last + matcher1.end();
-                    //themeLabel.setText(content.substring(matcher1.end()));
                     texts.list.add(new TabText(last + matcher1.end(), content.substring(matcher1.end()), texts));
                 }
                 else if (matcher2.find()) {
                     System.out.println((matcher2.end() - 2) + " " + content.substring(matcher2.end()));
-                    x = matcher2.end() - 2;
-                    //themeLabel.setText(content.substring(matcher2.end()));
                     texts.list.add(new TabText(matcher2.end() - 2, content.substring(matcher2.end()), texts));
                     last = matcher2.end() - 2;
                 }
+                else if (matcher3.find()) {
+                    System.out.println((last + matcher3.end()) + " " + content.substring(matcher3.end()));
+                    texts.list.add(new TabText(last + matcher3.end(), content.substring(matcher3.end()), texts));
+                }
                 else {
                     System.out.println((last + 1) + " " + content);
-                    x = last + 1;
-                    //themeLabel.setText(content);
                     texts.list.add(new TabText(last + 1, content, texts));
                 }
-
-                //ConnectLine connectLine = new ConnectLine(MainWindow.pan.getRootThemeLabelRightX(), MainWindow.pan.getRootThemeLabelMidY(), themeLabel.getThemeLeftX(), themeLabel.getThemeMidY());
-                //MainWindow.pan.addConnectLine(themeLabel, connectLine);//入度和连接线,子节点只能有一个入度
-
-                //themeLabel.setRank(themeLabel.getRank());
-
                 content = in.readLine();
-                y += yGap;
-            }
-
-            // 获取每个标签所占列数
-            TabText bufferTabText = null;
-            Stack<TabText> tabTexts = new Stack<>();
-            int chance = 1;
-            for (TabText tabText : texts.list) {
-                if (chance == 1) {
-                    bufferTabText = tabText;
-                    chance--;
-                    continue;
-                }
-                if (bufferTabText != null) {
-                    if (tabText.tabs > bufferTabText.tabs) {
-                        tabTexts.push(bufferTabText);
-                    }
-                    else if (tabText.tabs < bufferTabText.tabs) {
-                        while (tabTexts.peek().tabs >= tabText.getTabs()) {
-                            tabTexts.pop();
-                        }
-                    }
-                }
-                if (tabText.tabs <= bufferTabText.tabs) {
-                    for (TabText tabText1 : tabTexts) {
-                        tabText1.n++;
-                    }
-                }
-
-                bufferTabText = tabText;
-            }
-
-            System.out.println("n:");
-            for (TabText text : texts.list){
-                text.from = (float) -(text.n - 1)/2;
-                System.out.println("from: "+text.from+" tabs: "+text.tabs+" content: "+text.content);
             }
 
             System.out.println("load md file");
-            int buffergap = 1;
-            int yShift;
-            float from=0;
-            ThemeLabel bufferThemeLabel = null;
-            ButtonMouseListener.fatherLabel = null;
-            Stack<ThemeLabel> fatherList = new Stack<>();
-            for (TabText text : texts.list){
-                    if (ButtonMouseListener.fatherLabel == null) {//第一个
-                        MainWindow.pan.getRootThemeLabel().setText(text.content);
-                        bufferThemeLabel = MainWindow.pan.getRootThemeLabel();
-                        bufferTabText = text;
-
-                        fatherList.add(bufferThemeLabel);
-                        ButtonMouseListener.fatherLabel = bufferThemeLabel;
-                        bufferThemeLabel.from = text.from;
-
-                        System.out.println("1");
-                        continue;
-                    }
-                    if (text.tabs > bufferTabText.tabs) {//当前级数大于上个
-                        bufferThemeLabel.from = bufferTabText.from;
-                        fatherList.add(bufferThemeLabel);
-                        ButtonMouseListener.fatherLabel = fatherList.peek();
-
-                        System.out.print("2 ");
-                    }
-                    else if (text.tabs < bufferTabText.tabs) {//当前级数小于上个
-                        while (text.tabs <= fatherList.peek().getRank()){
-                            fatherList.pop();
-                        }
-
-                        ButtonMouseListener.fatherLabel = fatherList.peek();
-
-                        System.out.print("3 ");
-                    }
-                    else {
-                        System.out.print("0 ");
-                    }
-                    yShift = (int) ((fatherList.peek().from + (text.n - 1)/2) * yGap);
-                    bufferThemeLabel = ButtonMouseListener.add(text.content, text.getTabs(), yShift);
-
-                    System.out.print(text.content+" ");
-                    System.out.println((fatherList.peek().from + (float) (text.n - 1)/2));
-
-                    fatherList.peek().from += text.n;
-                    bufferTabText = text;
-                }
+            texts.toThemes();
         }
         else if (file.getName().endsWith(".xmind")) {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -196,51 +125,8 @@ public class AddFileChooser implements ActionListener {
             Topic rTopic = new Topic(rootTopic);
             rTopic.toText(texts, 0);
 
-            System.out.println("Tablist:");
-            for (TabText text : texts.list){
-                System.out.println(text.tabs+text.content);
-            }
-
             System.out.println("load xmind file");
-            int x=0, y=0;
-            int yGap = 100;
-            int buffergap = 1;
-            ThemeLabel bufferThemeLabel = null;
-            ButtonMouseListener.fatherLabel = null;
-            Stack<ThemeLabel> fatherList = new Stack<>();
-            for (TabText text : texts.list){
-                if (ButtonMouseListener.fatherLabel == null) {
-                    MainWindow.pan.getRootThemeLabel().setText(text.content);
-                    bufferThemeLabel = MainWindow.pan.getRootThemeLabel();
-                    //MainWindow.pan.setRootThemeLabel(bufferThemeLabel);
-
-                    fatherList.add(bufferThemeLabel);
-                    ButtonMouseListener.fatherLabel = bufferThemeLabel;
-
-                    System.out.println("1");
-                    continue;
-                }
-                if (text.tabs - fatherList.peek().getRank() > buffergap) {
-                    fatherList.add(bufferThemeLabel);
-                    ButtonMouseListener.fatherLabel = fatherList.peek();
-
-                    System.out.print("2 ");
-                    //y=0;
-                }
-                else if (text.tabs - fatherList.peek().getRank() < buffergap) {
-                    fatherList.pop();
-                    ButtonMouseListener.fatherLabel = fatherList.peek();
-
-                    System.out.print("3 ");
-                    //y=0;
-                }
-                else {
-                    y++;
-                }
-                bufferThemeLabel = ButtonMouseListener.add(text.content, text.getTabs(), y * yGap);
-                System.out.print("sub: ");
-                System.out.println(text.tabs - fatherList.peek().getRank());
-            }
+            texts.toThemes();
         }
         else {
             System.out.println("load other file");

@@ -58,8 +58,8 @@ public class ButtonMouseListener implements ActionListener { //添加节点
             /******** 增加连线 ************/
             ConnectLine connectLine = new ConnectLine(MainWindow.pan.getRootThemeLabelRightX(), MainWindow.pan.getRootThemeLabelMidY(), themeLabel.getThemeLeftX(), themeLabel.getThemeMidY());
             MainWindow.pan.addConnectLine(themeLabel, connectLine);//入度和连接线,子节点只能有一个入度
-
-        } else {
+        }
+        else {
             int distance = fatherLabel.getThemeLeftX() - MainWindow.pan.getRootThemeLabelRightX();
             if (distance < 0) {
                 x = fatherLabel.getThemeLeftX();
@@ -120,44 +120,78 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 ConnectLine connectLine = new ConnectLine(fatherLabel.getThemeRightX(), fatherLabel.getThemeMidY(), themeLabel.getThemeLeftX(), themeLabel.getThemeMidY());
                 MainWindow.pan.addConnectLine(themeLabel, connectLine);//入度和连接线,子节点只能有一个入度
             }
-            fatherLabel = null;
+            //fatherLabel = null;
         }
+        //自动排版
+        Texts texts = new Texts();
+        MainWindow.pan.getRootThemeLabel().toTexts(texts, 0);
+        MainWindow.pan.clearConnectLine();
+        texts.toThemes();
     }
 
-    static public ThemeLabel add(String text, int rank, int yPlus){
+    static public ThemeLabel add(String text, int tabs, int yPlus, boolean left){
         int x,y;
         int xShift = 100;
         if (fatherLabel == MainWindow.pan.getRootThemeLabel() || fatherLabel == null) {//如果是根节点的子节点
-            x = MainWindow.pan.getRootThemeLabelRightX();
-            y = MainWindow.pan.getRootThemeLabelTopY();
-            ThemeLabel themeLabel = new ThemeLabel(x + xShift, y + yPlus, text, rank);
-            themeLabel.setBackground(new Color(250, 245, 228));
-            themeLabel.setForeground(new Color(18, 91, 80));
-            Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
-            themeLabel.setBorder(blackLine);
-            themeLabel.setFont(new Font("微软雅黑",Font.BOLD,40));
-            /******** 增加父子节点关联 ************/
-            themeLabel.setFather(MainWindow.pan.getRootThemeLabel());
-            MainWindow.pan.getRootThemeLabel().addChild(themeLabel);
-            MainWindow.pan.add(themeLabel);
-            /******** 设置主题等级 ************/
-            themeLabel.setRank(1);
-            themeLabel.updateRankSize(themeLabel.getRank());
-            MainWindow.pan.add(themeLabel);
-            /******** 增加连线 ************/
-            ConnectLine connectLine = new ConnectLine(MainWindow.pan.getRootThemeLabelRightX(), MainWindow.pan.getRootThemeLabelMidY(), themeLabel.getThemeLeftX(), themeLabel.getThemeMidY());
-            MainWindow.pan.addConnectLine(themeLabel, connectLine);//入度和连接线,子节点只能有一个入度
-            return themeLabel;
+            if (left) {
+                x = MainWindow.pan.getRootThemeLabelLeftX();
+                y = MainWindow.pan.getRootThemeLabelTopY();
+                ThemeLabel themeLabel = new ThemeLabel(x - xShift * 2, y + yPlus, text, tabs);//特殊xShift
+                themeLabel.setBackground(new Color(250, 245, 228));
+                themeLabel.setForeground(new Color(18, 91, 80));
+                Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
+                themeLabel.setBorder(blackLine);
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,40));
+                MainWindow.pan.add(themeLabel);
+                /******** 增加父子节点关联 ************/
+                themeLabel.setFather(MainWindow.pan.getRootThemeLabel());
+                MainWindow.pan.getRootThemeLabel().addChild(themeLabel);
+                MainWindow.pan.add(themeLabel);
+                /******** 设置主题等级 ************/
+                themeLabel.setRank(1);
+                themeLabel.updateRankSize(themeLabel.getRank());
+                MainWindow.pan.add(themeLabel);
+                /******** 增加连线 ************/
+                themeLabel.updateSize();
+                ConnectLine connectLine = new ConnectLine(MainWindow.pan.getRootThemeLabelLeftX(), MainWindow.pan.getRootThemeLabelMidY(), themeLabel.getThemeRightX(), themeLabel.getThemeMidY());
+                MainWindow.pan.addConnectLine(themeLabel, connectLine);//入度和连接线,子节点只能有一个入度
+                return themeLabel;
+            }
+            else {
+                x = MainWindow.pan.getRootThemeLabelRightX();
+                y = MainWindow.pan.getRootThemeLabelTopY();
+                ThemeLabel themeLabel = new ThemeLabel(x + xShift, y + yPlus, text, tabs);
+                themeLabel.setBackground(new Color(250, 245, 228));
+                themeLabel.setForeground(new Color(18, 91, 80));
+                Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
+                themeLabel.setBorder(blackLine);
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,40));
+                MainWindow.pan.add(themeLabel);
+                /******** 增加父子节点关联 ************/
+                themeLabel.setFather(MainWindow.pan.getRootThemeLabel());
+                MainWindow.pan.getRootThemeLabel().addChild(themeLabel);
+                MainWindow.pan.add(themeLabel);
+                /******** 设置主题等级 ************/
+                themeLabel.setRank(1);
+                themeLabel.updateRankSize(themeLabel.getRank());
+                MainWindow.pan.add(themeLabel);
+                /******** 增加连线 ************/
+                themeLabel.updateSize();
+                ConnectLine connectLine = new ConnectLine(MainWindow.pan.getRootThemeLabelRightX(), MainWindow.pan.getRootThemeLabelMidY(), themeLabel.getThemeLeftX(), themeLabel.getThemeMidY());
+                MainWindow.pan.addConnectLine(themeLabel, connectLine);//入度和连接线,子节点只能有一个入度
+                return themeLabel;
+            }
         }
         else {
             int distance = fatherLabel.getThemeLeftX() - MainWindow.pan.getRootThemeLabelRightX();
-            if (distance < 0) {
+            if (distance < 0 || left) {
                 x = fatherLabel.getThemeLeftX();
                 y = fatherLabel.getThemeTopY();
-                ThemeLabel themeLabel = new ThemeLabel(x - xShift, y + yPlus, text, rank);
+                ThemeLabel themeLabel = new ThemeLabel(x - xShift*2, y + yPlus, text, tabs);
                 themeLabel.setBackground(new Color(248, 180, 0));
                 themeLabel.setForeground(Color.white);
                 themeLabel.setFont(new Font("微软雅黑",Font.BOLD,25));
+                MainWindow.pan.add(themeLabel);
                 /******** 增加父子节点关联 ************/
                 themeLabel.setFather(fatherLabel);
                 fatherLabel.addChild(themeLabel);
@@ -166,6 +200,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 themeLabel.updateRankSize(themeLabel.getRank());
                 MainWindow.pan.add(themeLabel);
                 /******** 增加父子节点连接线 ************/
+                themeLabel.updateSize();
                 ConnectLine connectLine = new ConnectLine(fatherLabel.getThemeLeftX(), fatherLabel.getThemeMidY(), themeLabel.getThemeRightX(), themeLabel.getThemeMidY());
                 MainWindow.pan.addConnectLine(themeLabel, connectLine);//入度和连接线,子节点只能有一个入度
                 return themeLabel;
@@ -173,10 +208,11 @@ public class ButtonMouseListener implements ActionListener { //添加节点
             else {
                 x = fatherLabel.getThemeRightX();
                 y = fatherLabel.getThemeTopY();
-                ThemeLabel themeLabel = new ThemeLabel(x + xShift, y + yPlus, text, rank);
+                ThemeLabel themeLabel = new ThemeLabel(x + xShift, y + yPlus, text, tabs);
                 themeLabel.setBackground(new Color(248, 180, 0));
                 themeLabel.setForeground(Color.white);
                 themeLabel.setFont(new Font("微软雅黑",Font.BOLD,25));
+
                 /******** 增加父子节点关联 ************/
                 themeLabel.setFather(fatherLabel);
                 fatherLabel.addChild(themeLabel);
@@ -185,6 +221,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 themeLabel.updateRankSize(themeLabel.getRank());
                 MainWindow.pan.add(themeLabel);
                 /******** 增加父子节点连接线 ************/
+                themeLabel.updateSize();
                 ConnectLine connectLine = new ConnectLine(fatherLabel.getThemeRightX(), fatherLabel.getThemeMidY(), themeLabel.getThemeLeftX(), themeLabel.getThemeMidY());
                 MainWindow.pan.addConnectLine(themeLabel, connectLine);//入度和连接线,子节点只能有一个入度
                 return themeLabel;

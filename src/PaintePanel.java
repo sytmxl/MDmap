@@ -104,11 +104,11 @@ class PaintePanel extends JPanel implements Runnable{
             Map.Entry<ThemeLabel, ConnectLine> entry = it.next();	//ÏÂ¸öÔªËØ
             ThemeLabel key = entry.getKey();
             ConnectLine val =entry.getValue();
-                it.remove();	//ÒÆ³ý
-                this.remove(key);
-            rootThemeLabel.setText("text");
+            it.remove();	//ÒÆ³ý
+            this.remove(key);
         }
-
+        rootThemeLabel.setText("text");
+        rootThemeLabel.delChild();
         System.out.println("done");
     }
 
