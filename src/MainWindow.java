@@ -57,6 +57,7 @@ public class MainWindow {
         JButton i_save = toolButton("md.png", "Save", "导出为md文件");
         i_save.addActionListener(savelistener);
         JButton i_saveXmind = toolButton("xmind.png", "Save", "导出为xmind文件");
+        i_saveXmind.addActionListener(xmindlistener);
         JButton i_add = toolButton("add.png", "New", "新建");
         i_add.addActionListener(buttonMouseListener);
         JButton i_delete = toolButton("delete.png", "Delete", "删除");
@@ -123,6 +124,7 @@ public class MainWindow {
     EditTextListener editTextListener=new EditTextListener();
     ClearListener clearListener=new ClearListener();
     PictureListener pictureListener=new PictureListener();
+    XmindListener xmindlistener=new XmindListener();
     ActionListener listener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e)
