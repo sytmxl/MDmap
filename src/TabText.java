@@ -9,11 +9,7 @@ public class TabText {
     String content;
     Texts texts;
     boolean left;
-
-    int fatherTabs=100;
-
     int n;
-
     float from;
 
     public int getTabs() {

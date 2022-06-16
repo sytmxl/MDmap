@@ -117,7 +117,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
             if (distance < 0 || left) {
                 x = fatherLabel.getThemeLeftX();
                 y = fatherLabel.getThemeTopY();
-                ThemeLabel themeLabel = new ThemeLabel(x - xShift, y + yPlus, text, tabs);
+                ThemeLabel themeLabel = new ThemeLabel(x - xShift*2, y + yPlus, text, tabs);
                 MainWindow.pan.add(themeLabel);
                 /******** 增加父子节点关联 ************/
                 themeLabel.setFather(fatherLabel);

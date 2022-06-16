@@ -187,6 +187,7 @@ public class ThemeLabel extends JLabel{
         this.ThemeLeftX = x;
         this.ThemeRightX = x + this.ThemeSizeX;
         this.ThemeMidY = y + this.ThemeSizeY / 2;
+        this.ThemeTopY = y;
         this.setBounds(x, y, this.ThemeSizeX, this.ThemeSizeY);
     }
 
