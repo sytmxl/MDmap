@@ -66,7 +66,7 @@ public class MainWindow {
         JButton i_clear = toolButton("clear.png", "Clear", "清空");
         i_clear.addActionListener(clearListener);
         JButton i_picture = toolButton("picture.png", "Picture", "导出图片");
-
+        i_picture.addActionListener(pictureListener);
 
         toolBar.add(i_open);
         toolBar.add(i_save);
@@ -122,8 +122,8 @@ public class MainWindow {
     DeleteThemeListener deleteThemeListener=new DeleteThemeListener();
     EditTextListener editTextListener=new EditTextListener();
     ClearListener clearListener=new ClearListener();
+    PictureListener pictureListener=new PictureListener();
     ActionListener listener = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e)
         {
@@ -131,6 +131,7 @@ public class MainWindow {
             String action = e.getActionCommand();
             //通过对话框打印
             JOptionPane.showMessageDialog(frame, action);
+
         }
 
     };
