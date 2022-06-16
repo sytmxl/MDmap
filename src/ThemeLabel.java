@@ -16,8 +16,8 @@ public class ThemeLabel extends JLabel{
     public int LabelName;
 
     /********* 定位尺寸 ********/
-    private int ThemeSizeX = 70;
-    private int ThemeSizeY = 50;
+    private int ThemeSizeX = 110;
+    private int ThemeSizeY = 70;
     private int ThemeLeftX, ThemeRightX, ThemeMidY, ThemeTopY;
 
     /********* 节点删除 ********/
@@ -121,9 +121,9 @@ public class ThemeLabel extends JLabel{
             englishSize = 30.0 / 25;
         }
         if(this.rank==0){
-            x=8;
+            x=1;
         }else if(this.rank==1){
-            x=5;
+            x=0;
         }
         return (int) ((str.length() - count) * (fontSize * englishSize)) + (int) ((count+x) * (fontSize * chineseSize));
 
@@ -148,14 +148,14 @@ public class ThemeLabel extends JLabel{
     /******** 因为等级更新主题长度 ************/
     public void updateRankSize(int rank){
         if(rank==0){
-            this.ThemeSizeY+=50;
-            this.ThemeSizeX+=80;
+            this.ThemeSizeY+=40;
+            this.ThemeSizeX+=100;
             this.ThemeRightX = this.getX() + ThemeSizeX;
             this.ThemeMidY = this.getY() + ThemeSizeY / 2;
         }
         else if(rank == 1){
-            this.ThemeSizeY+=30;
-            this.ThemeSizeX+=50;
+            this.ThemeSizeY+=20;
+            this.ThemeSizeX+=60;
             this.ThemeRightX = this.getX() + ThemeSizeX;
             this.ThemeMidY = this.getY() + ThemeSizeY / 2;
         }
@@ -174,6 +174,9 @@ public class ThemeLabel extends JLabel{
     }
     public ThemeLabel getChild(int index) {
         return this.child.get(index);
+    }
+    public int getChildNUm(){
+        return this.child.size();
     }
     public void setFather(ThemeLabel themeLabel){
         this.father=themeLabel;
@@ -256,4 +259,5 @@ public class ThemeLabel extends JLabel{
     public int getThemeMidX() {
         return this.ThemeSizeX/2 + this.getThemeLeftX();
     }
+
 }

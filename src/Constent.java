@@ -11,4 +11,6 @@ public class Constent {
 
     public static int themeFrameHeight=400;
     public static int themeFrameWidth=600;
+
+    public static ThemeLabel fatherLabel=null;
 }

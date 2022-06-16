@@ -17,17 +17,30 @@ public class ComponentMouseListener implements MouseInputListener {
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        ButtonMouseListener.fatherLabel=this.label;
-        System.out.println("click label "+ ButtonMouseListener.fatherLabel.LabelName);
         /***** 单击左键选中，单击右键取消选中主题，双击左键修改主题，双击右键删除主题*********/
         if (e.getButton() == e.BUTTON1){
             if(e.getClickCount() == 1){
+                Constent.fatherLabel=this.label;
                 if(lastChooseLabel!=null){
-                    Border noneLine = BorderFactory.createLineBorder(Color.black,0,true);
-                    lastChooseLabel.setBorder(noneLine);
+                    if(lastChooseLabel.getFather()== MainWindow.pan.getRootThemeLabel()){
+                        Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
+                        lastChooseLabel.setBorder(blackLine);
+                    }else{
+                        Border noneLine = BorderFactory.createLineBorder(Color.black,0,true);
+                        lastChooseLabel.setBorder(noneLine);
+                    }
                 }
-                Border blackLine = BorderFactory.createLineBorder(Color.black,2,true);
-                label.setBorder(blackLine);
+                if(label.getRank()==0){
+                    Border blackLine = BorderFactory.createLineBorder(new Color(248, 180, 0),5,true);
+                    label.setBorder(blackLine);
+                }else if(label.getRank()==1){
+                    Border blackLine = BorderFactory.createLineBorder(new Color(159, 230, 160),5,true);
+                    label.setBorder(blackLine);
+                }else{
+                    Border blackLine = BorderFactory.createLineBorder(new Color(255, 99, 99),5,true);
+                    label.setBorder(blackLine);
+                }
+
                 lastChooseLabel=this.label;
             }else if(e.getClickCount() == 2){
                 for (Map.Entry<ThemeLabel, ConnectLine> item : MainWindow.pan.getallConnectLine().entrySet()) {
@@ -43,8 +56,14 @@ public class ComponentMouseListener implements MouseInputListener {
 
         }else if(e.getButton() == e.BUTTON3){
             if(e.getClickCount() == 1){
-                Border noneLine = BorderFactory.createLineBorder(Color.black,0,true);
-                label.setBorder(noneLine);
+                Constent.fatherLabel=null;
+                if(label.getFather()== MainWindow.pan.getRootThemeLabel()){
+                    Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
+                    label.setBorder(blackLine);
+                }else{
+                    Border noneLine = BorderFactory.createLineBorder(Color.black,0,true);
+                    label.setBorder(noneLine);
+                }
             }
             else if(e.getClickCount() == 2){
                 new ThemeDetect(MainWindow.pan).deleteConnect(this.label);

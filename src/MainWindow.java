@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
 
 public class MainWindow {
@@ -20,12 +21,16 @@ public class MainWindow {
         }
         javax.swing.SwingUtilities.invokeLater(new Runnable() { //确保了事件处理器都能串行的执行，并且绘画过程不会被事件打断
             public void run() {
-                MainWindow mainWindow = new MainWindow();
+                try {
+                    MainWindow mainWindow = new MainWindow();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
-    public  MainWindow(){
+    public  MainWindow() throws IOException {
         pan=new PaintePanel();
         Thread tr=new Thread(pan);
         tr.start();

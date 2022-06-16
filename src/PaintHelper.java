@@ -28,8 +28,11 @@ public class PaintHelper {
     public void PainteLine(ConnectLine connectLine) {
         /***** 设置线宽 **********/
         g2.setStroke(new BasicStroke(3.0f));
+        /***** 设置线颜色 **********/
+        g2.setColor(connectLine.color);
         /***** 绘制连接线 ********/
         this.drawALLine(connectLine.getStartX(), connectLine.getStartY(), connectLine.getEndX(), connectLine.getEndY(), g2);
+
     }
 
     private void drawALLine(int sx, int sy, int ex, int ey, Graphics2D g2) {

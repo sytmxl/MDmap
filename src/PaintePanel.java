@@ -18,17 +18,20 @@ class PaintePanel extends JPanel implements Runnable{
 
         rootThemeLabel=new ThemeLabel(200,200);
         rootThemeLabel.updateRankSize(0);
+        rootThemeLabel.setBackground(new Color(255, 99, 99));
+        rootThemeLabel.setForeground(Color.white);
+        rootThemeLabel.setFont(new Font("Î¢ÈíÑÅºÚ",Font.BOLD,46));
         add(rootThemeLabel);
 
 
 
-        this.setBackground(Color.white);// ±³¾°ÑÕÉ«Îª°×É«
+        this.setBackground(new Color(250, 245, 228));// ±³¾°ÑÕÉ«Îª°×É«
         this.setSize(Constent.paintPanelWidth, Constent.paintPanelHight);
         this.setLayout(null);
      //   this.setBounds(100,0,200,200);
         ConnectLineList = new HashMap<ThemeLabel, ConnectLine>();
        this.setPreferredSize(scrollPane.getViewport().getPreferredSize());
-
+        //MainWindow.pan.setBackground(new Color(255, 99, 99));
     }
     public void run() {
         // TODO Auto-generated method stub

@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class ConnectLine implements java.io.Serializable{
     /**
      * 属性:
@@ -9,7 +11,7 @@ public class ConnectLine implements java.io.Serializable{
     private int startX, startY, endX, endY;
     private int width;
     boolean isLive = true;
-
+    Color color;
     /**
      * 构造方法
      *
@@ -24,6 +26,7 @@ public class ConnectLine implements java.io.Serializable{
         this.endX = endX;
         this.endY = endY;
         this.width = 1;
+        this.color = new Color(86, 74, 74);
     }
 
     /***
