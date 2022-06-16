@@ -102,8 +102,7 @@ public class SaveFileChooser implements ActionListener {
             //workbook.save(file.getName());
             OutputStream outputStream = new FileOutputStream(file);
             workbook.save(outputStream);
+            outputStream.close();
         }
-
-
     }
 }

@@ -224,26 +224,31 @@ public class ThemeLabel extends JLabel{
     }
 
     public void toText(BufferedWriter out, String level) throws IOException {
-        if (this.child == null && level.endsWith("#")) {
+        /*
+        if (this.child.size() == 0 && level.endsWith("###")) {//最低的
             out.write(this.getText() + '\n');
         }
-        else if (this.child == null && level.endsWith("- ")) {
+        else if (this.child.size() == 0 && level.endsWith("- ")) {
             out.write(level + this.getText() + '\n');
         }
-        else {
-            out.write(level + " "+this.getText() + '\n');
-            for (ThemeLabel label : child) {
-                if(level.endsWith("#")) {
-                    if(level.length()<=6) {
-                        label.toText(out, level+"#");
-                    }
-                    else {
-                        label.toText(out, "- ");
-                    }
+
+         */
+        if (level.equals("##")) {
+            out.write("---"+'\n');
+            out.write("---"+'\n');
+        }
+        out.write(level + " "+this.getText() + '\n');
+        for (ThemeLabel label : child) {
+            if(level.endsWith("#")) {
+                if(level.length()<=2) {
+                    label.toText(out, level+"#");
                 }
-                else { // 超过六个#使用点层次
-                    label.toText(out, "  " + level);
+                else {
+                    label.toText(out, "- ");
                 }
+            }
+            else { // 超过界限使用点层次
+                label.toText(out, "  " + level);
             }
         }
     }
@@ -258,5 +263,9 @@ public class ThemeLabel extends JLabel{
 
     public int getThemeMidX() {
         return this.ThemeSizeX/2 + this.getThemeLeftX();
+    }
+
+    public void delChild() {
+        child = new Vector<>();
     }
 }

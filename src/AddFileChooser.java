@@ -54,17 +54,42 @@ public class AddFileChooser implements ActionListener {
             Texts texts = new Texts();
 
             MainWindow.pan.clearConnectLine();
+            boolean code = false;
             while (content != null) {
+                Matcher matcher5 = Pattern.compile("```").matcher(content);//代码段跳过
+                if (matcher5.find()) {
+                    if (code) {
+                        code = false;
+                        content = in.readLine();
+                        continue;
+                    }
+                    else {
+                        code = true;
+                    }
+                }
                 //md文本语法分析
                 if (Pattern.compile("^\\s*$").matcher(content).matches() ||
-                        Pattern.compile("^\\s*!\\[").matcher(content).find()) {
-                    System.out.println("blank");
+                        Pattern.compile("^\\s*!\\[").matcher(content).find() || code) {
+                    //System.out.println("blank");
+                    content = in.readLine();
+                    continue;
+                }
+
+                Matcher matcher4 = Pattern.compile("^> ").matcher(content);//去除"> "
+                if (matcher4.find()) {
+                    content = content.substring(2);
+                }
+
+                Matcher matcher6 = Pattern.compile("^>").matcher(content);//去除单行">"
+                if (matcher6.find()) {
                     content = in.readLine();
                     continue;
                 }
 
                 Matcher matcher1 = Pattern.compile("^\\s*- ").matcher(content);
                 Matcher matcher2 = Pattern.compile("^#+ ").matcher(content);
+                Matcher matcher3 = Pattern.compile("^\\s*\\* ").matcher(content);
+
                 if (matcher1.find()) {
                     System.out.println((last + matcher1.end()) + " " + content.substring(matcher1.end()));
                     texts.list.add(new TabText(last + matcher1.end(), content.substring(matcher1.end()), texts));
@@ -74,11 +99,14 @@ public class AddFileChooser implements ActionListener {
                     texts.list.add(new TabText(matcher2.end() - 2, content.substring(matcher2.end()), texts));
                     last = matcher2.end() - 2;
                 }
+                else if (matcher3.find()) {
+                    System.out.println((last + matcher3.end()) + " " + content.substring(matcher3.end()));
+                    texts.list.add(new TabText(last + matcher3.end(), content.substring(matcher3.end()), texts));
+                }
                 else {
                     System.out.println((last + 1) + " " + content);
                     texts.list.add(new TabText(last + 1, content, texts));
                 }
-
                 content = in.readLine();
             }
 
