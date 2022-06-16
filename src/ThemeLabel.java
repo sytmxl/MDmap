@@ -252,12 +252,12 @@ public class ThemeLabel extends JLabel{
             }
         }
     }
-    public void toTextForXmind(Texts texts, int tabs) {
+    public void toTexts(Texts texts, int tabs) {
         texts.list.add(new TabText(tabs, this.getText(), texts));
         System.out.print(tabs);
         System.out.println(this.getText());
         for (ThemeLabel themeLabel : child) {
-            themeLabel.toTextForXmind(texts, tabs+1);
+            themeLabel.toTexts(texts, tabs+1);
         }
     }
 
