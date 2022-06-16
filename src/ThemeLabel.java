@@ -3,7 +3,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Vector;
 public class ThemeLabel extends JLabel{
+    public int tabs;
     public float from;
+    public float leftFrom;
     /******* 父亲孩子 *****/
     private ThemeLabel father=null;
     private Vector<ThemeLabel> child = null;
@@ -51,7 +53,7 @@ public class ThemeLabel extends JLabel{
         this.addMouseMotionListener(componentMouseListener);
     }
 
-    public ThemeLabel(int x,int y, String text, int rank){
+    public ThemeLabel(int x,int y, String text, int tabs){
         super("",JLabel.CENTER);
         this.child = new Vector<ThemeLabel>();
 
@@ -74,7 +76,7 @@ public class ThemeLabel extends JLabel{
 
         this.setText(text);
         //this.updateSize();
-        this.setRank(rank);
+        this.tabs = tabs;
         this.setBounds(x, y, this.ThemeSizeX, this.ThemeSizeY);
 
         this.setOpaque(true);

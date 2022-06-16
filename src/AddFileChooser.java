@@ -132,57 +132,80 @@ public class AddFileChooser implements ActionListener {
             System.out.println("n:");
             for (TabText text : texts.list){
                 text.from = (float) -(text.n - 1)/2;
-                System.out.println("from: "+text.from+" tabs: "+text.tabs+" content: "+text.content);
+                System.out.println("n: "+text.n+"from: "+text.from+" tabs: "+text.tabs+" content: "+text.content);
             }
 
+            int left = texts.rootSplit();//根部用01背包分成两部分，返回坐左边列数
+
             System.out.println("load md file");
-            int buffergap = 1;
             int yShift;
-            float from=0;
             ThemeLabel bufferThemeLabel = null;
+            ThemeLabel root = null;
             ButtonMouseListener.fatherLabel = null;
             Stack<ThemeLabel> fatherList = new Stack<>();
             for (TabText text : texts.list){
-                    if (ButtonMouseListener.fatherLabel == null) {//第一个
-                        MainWindow.pan.getRootThemeLabel().setText(text.content);
-                        bufferThemeLabel = MainWindow.pan.getRootThemeLabel();
-                        bufferTabText = text;
+                if (ButtonMouseListener.fatherLabel == null) {//第一个，根结点
+                    MainWindow.pan.getRootThemeLabel().setText(text.content);
+                    bufferThemeLabel = MainWindow.pan.getRootThemeLabel();
+                    bufferTabText = text;
 
-                        fatherList.add(bufferThemeLabel);
-                        ButtonMouseListener.fatherLabel = bufferThemeLabel;
-                        bufferThemeLabel.from = text.from;
+                    ButtonMouseListener.fatherLabel = bufferThemeLabel;
+                    bufferThemeLabel.leftFrom = (float) -(left - 1)/2;
+                    bufferThemeLabel.from = (float) - (text.n - left - 1)/2;
+                    fatherList.add(bufferThemeLabel);
+                    root = bufferThemeLabel;
 
-                        System.out.println("1");
-                        continue;
-                    }
-                    if (text.tabs > bufferTabText.tabs) {//当前级数大于上个
+                    System.out.println("---------");
+                    System.out.println("1");
+                    System.out.println("leftFrom: "+ bufferThemeLabel.leftFrom);
+                    System.out.println("from: "+ bufferThemeLabel.from);
+                    System.out.println("---------");
+                    continue;
+                }
+                if (text.tabs > bufferTabText.tabs) {//当前级数大于上个
+                    if (bufferThemeLabel != root) {
                         bufferThemeLabel.from = bufferTabText.from;
                         fatherList.add(bufferThemeLabel);
                         ButtonMouseListener.fatherLabel = fatherList.peek();
-
-                        System.out.print("2 ");
                     }
-                    else if (text.tabs < bufferTabText.tabs) {//当前级数小于上个
-                        while (text.tabs <= fatherList.peek().getRank()){
-                            fatherList.pop();
-                        }
+                    //System.out.println("add:"+fatherList.peek().getText());
 
-                        ButtonMouseListener.fatherLabel = fatherList.peek();
-
-                        System.out.print("3 ");
-                    }
-                    else {
-                        System.out.print("0 ");
-                    }
-                    yShift = (int) ((fatherList.peek().from + (text.n - 1)/2) * yGap);
-                    bufferThemeLabel = ButtonMouseListener.add(text.content, text.getTabs(), yShift);
-
-                    System.out.print(text.content+" ");
-                    System.out.println((fatherList.peek().from + (float) (text.n - 1)/2));
-
-                    fatherList.peek().from += text.n;
-                    bufferTabText = text;
+                    System.out.print("2 ");
                 }
+                else if (text.tabs < bufferTabText.tabs) {//当前级数小于上个
+                    while (text.tabs <= fatherList.peek().tabs){
+                        //System.out.println("pop:"+fatherList.peek().getText());
+                        fatherList.pop();
+                    }
+
+                    ButtonMouseListener.fatherLabel = fatherList.peek();
+
+                    System.out.print("3 ");
+                }
+                else {
+                    System.out.print("0 ");
+                }
+                if (text.left) {//在rootSplit中对根结点的直接自结点有特殊的leftFrom
+                    System.out.println("leftFrom: "+fatherList.peek().leftFrom);
+                    yShift = (int) ((fatherList.peek().leftFrom + (text.n - 1) / 2) * yGap);
+                }
+                else {
+                    yShift = (int) ((fatherList.peek().from + (text.n - 1) / 2) * yGap);
+                }
+                bufferThemeLabel = ButtonMouseListener.add(text.content, text.getTabs(), yShift, text.left);
+
+                System.out.print(text.content+" from:" + fatherList.peek().from + " n:"+text.n);
+
+                if (text.left) {
+                    fatherList.peek().leftFrom += text.n;
+                }
+                else {
+                    fatherList.peek().from += text.n;
+                }
+                bufferTabText = text;
+            }
+
+            System.out.println(" ");
         }
         else if (file.getName().endsWith(".xmind")) {
             FileInputStream fileInputStream = new FileInputStream(file);
@@ -196,51 +219,113 @@ public class AddFileChooser implements ActionListener {
             Topic rTopic = new Topic(rootTopic);
             rTopic.toText(texts, 0);
 
-            System.out.println("Tablist:");
-            for (TabText text : texts.list){
-                System.out.println(text.tabs+text.content);
+            int yGap = 100;
+            // 获取每个标签所占列数
+            TabText bufferTabText = null;
+            Stack<TabText> tabTexts = new Stack<>();
+            int chance = 1;
+            for (TabText tabText : texts.list) {
+                if (chance == 1) {
+                    bufferTabText = tabText;
+                    chance--;
+                    continue;
+                }
+                if (bufferTabText != null) {
+                    if (tabText.tabs > bufferTabText.tabs) {
+                        tabTexts.push(bufferTabText);
+                    }
+                    else if (tabText.tabs < bufferTabText.tabs) {
+                        while (tabTexts.peek().tabs >= tabText.getTabs()) {
+                            tabTexts.pop();
+                        }
+                    }
+                }
+                if (tabText.tabs <= bufferTabText.tabs) {
+                    for (TabText tabText1 : tabTexts) {
+                        tabText1.n++;
+                    }
+                }
+
+                bufferTabText = tabText;
             }
 
+            System.out.println("n:");
+            for (TabText text : texts.list){
+                text.from = (float) -(text.n - 1)/2;
+                System.out.println("n: "+text.n+"from: "+text.from+" tabs: "+text.tabs+" content: "+text.content);
+            }
+
+            int left = texts.rootSplit();//根部用01背包分成两部分，返回坐左边列数
+
             System.out.println("load xmind file");
-            int x=0, y=0;
-            int yGap = 100;
-            int buffergap = 1;
+            int yShift;
             ThemeLabel bufferThemeLabel = null;
+            ThemeLabel root = null;
             ButtonMouseListener.fatherLabel = null;
             Stack<ThemeLabel> fatherList = new Stack<>();
             for (TabText text : texts.list){
-                if (ButtonMouseListener.fatherLabel == null) {
+                if (ButtonMouseListener.fatherLabel == null) {//第一个，根结点
                     MainWindow.pan.getRootThemeLabel().setText(text.content);
                     bufferThemeLabel = MainWindow.pan.getRootThemeLabel();
-                    //MainWindow.pan.setRootThemeLabel(bufferThemeLabel);
+                    bufferTabText = text;
 
-                    fatherList.add(bufferThemeLabel);
                     ButtonMouseListener.fatherLabel = bufferThemeLabel;
+                    bufferThemeLabel.leftFrom = (float) -(left - 1)/2;
+                    bufferThemeLabel.from = (float) - (text.n - left - 1)/2;
+                    fatherList.add(bufferThemeLabel);
+                    root = bufferThemeLabel;
 
+                    System.out.println("---------");
                     System.out.println("1");
+                    System.out.println("leftFrom: "+ bufferThemeLabel.leftFrom);
+                    System.out.println("from: "+ bufferThemeLabel.from);
+                    System.out.println("---------");
                     continue;
                 }
-                if (text.tabs - fatherList.peek().getRank() > buffergap) {
-                    fatherList.add(bufferThemeLabel);
-                    ButtonMouseListener.fatherLabel = fatherList.peek();
+                if (text.tabs > bufferTabText.tabs) {//当前级数大于上个
+                    if (bufferThemeLabel != root) {
+                        bufferThemeLabel.from = bufferTabText.from;
+                        fatherList.add(bufferThemeLabel);
+                        ButtonMouseListener.fatherLabel = fatherList.peek();
+                    }
+                    //System.out.println("add:"+fatherList.peek().getText());
 
                     System.out.print("2 ");
-                    //y=0;
                 }
-                else if (text.tabs - fatherList.peek().getRank() < buffergap) {
-                    fatherList.pop();
+                else if (text.tabs < bufferTabText.tabs) {//当前级数小于上个
+                    while (text.tabs <= fatherList.peek().tabs){
+                        //System.out.println("pop:"+fatherList.peek().getText());
+                        fatherList.pop();
+                    }
+
                     ButtonMouseListener.fatherLabel = fatherList.peek();
 
                     System.out.print("3 ");
-                    //y=0;
                 }
                 else {
-                    y++;
+                    System.out.print("0 ");
                 }
-                bufferThemeLabel = ButtonMouseListener.add(text.content, text.getTabs(), y * yGap);
-                System.out.print("sub: ");
-                System.out.println(text.tabs - fatherList.peek().getRank());
+                if (text.left) {//在rootSplit中对根结点的直接自结点有特殊的leftFrom
+                    System.out.println("leftFrom: "+fatherList.peek().leftFrom);
+                    yShift = (int) ((fatherList.peek().leftFrom + (text.n - 1) / 2) * yGap);
+                }
+                else {
+                    yShift = (int) ((fatherList.peek().from + (text.n - 1) / 2) * yGap);
+                }
+                bufferThemeLabel = ButtonMouseListener.add(text.content, text.getTabs(), yShift, text.left);
+
+                System.out.print(text.content+" from:" + fatherList.peek().from + " n:"+text.n);
+
+                if (text.left) {
+                    fatherList.peek().leftFrom += text.n;
+                }
+                else {
+                    fatherList.peek().from += text.n;
+                }
+                bufferTabText = text;
             }
+
+            System.out.println(" ");
         }
         else {
             System.out.println("load other file");
