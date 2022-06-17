@@ -1,4 +1,3 @@
-import org.xmind.core.CoreException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -23,11 +22,18 @@ public class PictureListener implements ActionListener {
         fileChooser.setFileFilter(new FileNameExtensionFilter("jpg", saveType));
         result =fileChooser.showSaveDialog(MainWindow.frame);
         if(result == JFileChooser.APPROVE_OPTION) {//选择了确定键
+            // move all to left top corner
+            ThemeLabel root = MainWindow.pan.getRootThemeLabel();
+            root.getRange();
+            new ThemeDetect(MainWindow.pan).moveAll(-root.left + 100, -root.top + 100);
+
             file = fileChooser.getSelectedFile();
             System.out.println(file.getName());
             //saveFile2();
-            Dimension imageSize = MainWindow.pan.getSize();
-            BufferedImage image = new BufferedImage(imageSize.width,imageSize.height, BufferedImage.TYPE_INT_RGB);
+            //Dimension imageSize = MainWindow.pan.getSize();
+            System.out.println(root.right-root.left + 200);
+            System.out.println(root.bottom-root.top + 200);
+            BufferedImage image = new BufferedImage(root.right-root.left + 200,root.bottom-root.top + 200, BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics = image.createGraphics();
             MainWindow.pan.paint(graphics);
             graphics.dispose();
@@ -41,7 +47,5 @@ public class PictureListener implements ActionListener {
         }else if(result == JFileChooser.ERROR_OPTION) {//出错了
 
         }
-
-
     }
 }

@@ -4,6 +4,10 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Vector;
 public class ThemeLabel extends JLabel{
+    int left = 100000;//在根结点中保存左边界
+    int top = 100000;//在根结点中保存上边界
+    int right = -100000;
+    int bottom = -100000;
     public boolean isChoosen = false;
     public int tabs;
     public float from;
@@ -274,5 +278,28 @@ public class ThemeLabel extends JLabel{
     
     public void delChild() {
         child = new Vector<>();
+    }
+
+    public void getRange() {
+        ThemeLabel root = MainWindow.pan.getRootThemeLabel();
+        if (this == root) {
+            top = left = 100000;
+            bottom = right = -100000;
+        }
+        if (this.getThemeLeftX() < MainWindow.pan.getRootThemeLabel().left) {
+            root.left = this.getThemeLeftX();
+        }
+        if (this.getThemeTopY() < root.top) {
+            root.top = this.getThemeTopY();
+        }
+        if (this.getThemeTopY() + this.ThemeSizeY > root.bottom) {
+            root.bottom = this.getThemeTopY() + this.ThemeSizeY;
+        }
+        if (this.getThemeLeftX() + this.ThemeSizeX > root.right) {
+            root.right = this.getThemeLeftX() + this.ThemeSizeX;
+        }
+        for (ThemeLabel themeLabel : child) {
+            themeLabel.getRange();
+        }
     }
 }

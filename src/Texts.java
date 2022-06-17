@@ -9,7 +9,7 @@ public class Texts {
     List<TabText> list = new ArrayList<>();
 
     public int rootSplit() {
-        //获取父节点为根结点的TabTest列表
+        //???????????????TabTest?б?
         Stack<TabText> fatherList = new Stack<>();
         List<TabText> rootSideList = new ArrayList<>();
         TabText bufferTabText = null;
@@ -39,17 +39,17 @@ public class Texts {
             }
             bufferTabText = tabText;
         }
-        //01背包分列表为两列，在左的属性left标ture
-        int m = rootSideList.size();//连接根的数量为物品数量
-        int c = (root.n)/2;//中位线为背包容积
+        //01???????б?????У??????????left??ture
+        int m = rootSideList.size();//???????????????????
+        int c = (root.n)/2;//??λ??????????
         int [][] dp = new int[m+1][c+1];
 
-        for(int i = 1; i <= m; i++) {//初始化
+        for(int i = 1; i <= m; i++) {//?????
             for (int j = 0; j <= c; j++) {
                 dp[i][j]=0;
             }
         }
-        for(int i = 1; i <= m; i++){//01背包
+        for(int i = 1; i <= m; i++){//01????
             for(int j = 0; j <= c; j++){
                 if(rootSideList.get(i-1).n <= j) {
                     if(dp[i-1][j]>dp[i-1][j-rootSideList.get(i-1).n]+rootSideList.get(i-1).n) dp[i][j] = dp[i-1][j];
@@ -61,7 +61,7 @@ public class Texts {
             }
         }
         int b = c;
-        for(int i = m; i >= 1; i--){//判断是否选中，选中的去左边
+        for(int i = m; i >= 1; i--){//?ж??????У???е?????
             if(dp[i][b] > dp[i - 1][b]){
                 rootSideList.get(i-1).left = true;
                 b -= rootSideList.get(i-1).n;
@@ -69,7 +69,7 @@ public class Texts {
         }
 
         int left = 0;
-        System.out.println("分离结果: ");
+        System.out.println("??????: ");
         for (TabText tabText : rootSideList) {
             if (tabText.left) {
                 System.out.println(tabText.content);
@@ -83,7 +83,7 @@ public class Texts {
     public ThemeLabel toThemes() {
         int yGap = 100;
         int yShift = 0;
-        // 获取每个标签所占列数
+        // ????????????????
         TabText bufferTabText = null;
         Stack<TabText> tabTexts = new Stack<>();
         int chance = 1;
@@ -118,7 +118,7 @@ public class Texts {
             System.out.println("n: "+text.n+"from: "+text.from+" tabs: "+text.tabs+" content: "+text.content);
         }
 
-        int left = this.rootSplit();//根部用01背包分成两部分，返回坐左边列数
+        int left = this.rootSplit();//??????01???????????????????????????
 
         ThemeLabel bufferThemeLabel = null;
         ThemeLabel root = null;
@@ -126,7 +126,7 @@ public class Texts {
         Stack<ThemeLabel> fatherList = new Stack<>();
         ThemeLabel chosenLabel = null;
         for (TabText text : this.list){
-            if (ButtonMouseListener.fatherLabel == null) {//第一个，根结点
+            if (ButtonMouseListener.fatherLabel == null) {//????????????
                 MainWindow.pan.getRootThemeLabel().setText(text.content);
                 bufferThemeLabel = MainWindow.pan.getRootThemeLabel();
                 bufferTabText = text;
@@ -144,7 +144,7 @@ public class Texts {
                 System.out.println("---------");
                 continue;
             }
-            if (text.tabs > bufferTabText.tabs) {//当前级数大于上个
+            if (text.tabs > bufferTabText.tabs) {//??????????????
                 if (bufferThemeLabel != root) {
                     bufferThemeLabel.from = bufferTabText.from;
                     fatherList.add(bufferThemeLabel);
@@ -157,7 +157,7 @@ public class Texts {
 
                 System.out.print("2 ");
             }
-            else if (text.tabs < bufferTabText.tabs) {//当前级数小于上个
+            else if (text.tabs < bufferTabText.tabs) {//???????С?????
                 while (text.tabs <= fatherList.peek().tabs){
                     //System.out.println("pop:"+fatherList.peek().getText());
                     fatherList.pop();
@@ -171,7 +171,7 @@ public class Texts {
                 System.out.print("0 ");
             }
 
-            if (text.left) {//在rootSplit中对根结点的直接自结点有特殊的leftFrom
+            if (text.left) {//??rootSplit?ж????????????????????leftFrom
                 yShift = (int) ((fatherList.peek().leftFrom + ((float) text.n - 1) / 2) * yGap);
             }
             else {
@@ -192,6 +192,8 @@ public class Texts {
                 chosenLabel = bufferThemeLabel;
             }
         }
+        root.getRange();
+        new ThemeDetect(MainWindow.pan).moveAll(-root.left + 100, -root.top + 100);
         return chosenLabel;
     }
 }

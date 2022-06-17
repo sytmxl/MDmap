@@ -144,7 +144,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
             if (left) {
                 x = MainWindow.pan.getRootThemeLabelLeftX();
                 y = MainWindow.pan.getRootThemeLabelTopY();
-                ThemeLabel themeLabel = new ThemeLabel(x - xShift * 3, y + yPlus, text, tabs, isChoosen);//特殊xShift
+                ThemeLabel themeLabel = new ThemeLabel((int) (x - xShift * 2.5), y + yPlus, text, tabs, isChoosen);//特殊xShift
                 themeLabel.setBackground(new Color(250, 245, 228));
                 themeLabel.setForeground(new Color(18, 91, 80));
                 Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
