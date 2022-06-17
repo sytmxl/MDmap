@@ -247,8 +247,8 @@ public class ThemeLabel extends JLabel{
 
          */
         if (level.equals("##")) {
-            out.write("---"+'\n');
-            out.write("---"+'\n');
+            //out.write("---"+'\n');
+            //out.write("---"+'\n');
         }
         out.write(level + " "+this.getText() + '\n');
         for (ThemeLabel label : child) {

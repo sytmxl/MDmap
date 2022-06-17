@@ -42,7 +42,6 @@ public class AddFileChooser implements ActionListener {
 
     public static void loadFile(File file) throws IOException, CoreException {
         MainWindow.pan.clearConnectLine();//clear panel
-        MainWindow.pan.getRootThemeLabel().updateLocation(600, 300);//location
 
         if (file.getName().endsWith(".md")) {
             FileReader fr = new FileReader(file);

@@ -129,6 +129,7 @@ public class Texts {
             if (ButtonMouseListener.fatherLabel == null) {//????????????
                 MainWindow.pan.getRootThemeLabel().setText(text.content);
                 bufferThemeLabel = MainWindow.pan.getRootThemeLabel();
+                bufferThemeLabel.updateSize();
                 bufferTabText = text;
 
                 bufferThemeLabel.leftFrom = (float) -(left - 1)/2;
@@ -192,8 +193,14 @@ public class Texts {
                 chosenLabel = bufferThemeLabel;
             }
         }
-        root.getRange();
-        new ThemeDetect(MainWindow.pan).moveAll(-root.left + 100, -root.top + 100);
+
+        root.getRange();// cal the range
+        if (root.left < 100 || root.top < 100)
+            new ThemeDetect(MainWindow.pan).moveAll(-root.left + 100, -root.top + 100);// move according to range(to left top corner)
+
+        //Constent.paintPanelHight = root.bottom-root.top + 600;//update pan size
+        //Constent.paintPanelWidth = root.right-root.left + 600;
+
         return chosenLabel;
     }
 }

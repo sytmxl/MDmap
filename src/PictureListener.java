@@ -37,6 +37,9 @@ public class PictureListener implements ActionListener {
             Graphics2D graphics = image.createGraphics();
             MainWindow.pan.paint(graphics);
             graphics.dispose();
+
+            if (root.left > 100 && root.top > 100)//没越界就移回去
+                new ThemeDetect(MainWindow.pan).moveAll(root.left - 100, root.top - 100);
             try {
                 ImageIO.write(image, "jpg",file);
             } catch (IOException ex) {
