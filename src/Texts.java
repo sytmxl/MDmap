@@ -80,7 +80,7 @@ public class Texts {
         return left;
     }
 
-    public void toThemes() {
+    public ThemeLabel toThemes() {
         int yGap = 100;
         int yShift = 0;
         // 获取每个标签所占列数
@@ -124,6 +124,7 @@ public class Texts {
         ThemeLabel root = null;
         ButtonMouseListener.fatherLabel = null;
         Stack<ThemeLabel> fatherList = new Stack<>();
+        ThemeLabel chosenLabel = null;
         for (TabText text : this.list){
             if (ButtonMouseListener.fatherLabel == null) {//第一个，根结点
                 MainWindow.pan.getRootThemeLabel().setText(text.content);
@@ -185,8 +186,12 @@ public class Texts {
                 System.out.println(text.content+" from:" + fatherList.peek().from + " n:"+text.n + " yShift:"+yShift);
                 fatherList.peek().from += text.n;
             }
-            bufferThemeLabel = ButtonMouseListener.add(text.content, text.getTabs(), yShift, text.left);
+            bufferThemeLabel = ButtonMouseListener.add(text.content, text.getTabs(), yShift, text.left, text.isChoosen);
             bufferTabText = text;
+            if (bufferThemeLabel.isChoosen) {
+                chosenLabel = bufferThemeLabel;
+            }
         }
+        return chosenLabel;
     }
 }

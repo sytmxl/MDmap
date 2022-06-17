@@ -20,9 +20,10 @@ public class ButtonMouseListener implements ActionListener { //添加节点
         ThemeLabel fatherLabel=Constent.fatherLabel;
         ThemeLabel themeLabel;
         if(fatherLabel!=null){
+            fatherLabel.isChoosen = true;//记录被选中的label，转换时保留信息以供恢复
             System.out.println("father"+fatherLabel.LabelName);
         }else{
-            System.out.println("null");
+            fatherLabel=Constent.fatherLabel=MainWindow.pan.getRootThemeLabel();
         }
         int num=0,max=-10;
         System.out.println("why");
@@ -127,17 +128,23 @@ public class ButtonMouseListener implements ActionListener { //添加节点
         Texts texts = new Texts();
         MainWindow.pan.getRootThemeLabel().toTexts(texts, 0);
         MainWindow.pan.clearConnectLine();
-        texts.toThemes();
+        ThemeLabel chosenLabel = texts.toThemes();
+        if (chosenLabel == null) {//根节点时为null
+            chosenLabel = MainWindow.pan.getRootThemeLabel();
+        }
+        Constent.fatherLabel = fatherLabel = ComponentMouseListener.lastChooseLabel = chosenLabel;
+        ComponentMouseListener.addBorder(chosenLabel);
+        chosenLabel.isChoosen = false;
     }
 
-    static public ThemeLabel add(String text, int tabs, int yPlus, boolean left){
+    static public ThemeLabel add(String text, int tabs, int yPlus, boolean left, boolean isChoosen){
         int x,y;
         int xShift = 100;
         if (fatherLabel == MainWindow.pan.getRootThemeLabel() || fatherLabel == null) {//如果是根节点的子节点
             if (left) {
                 x = MainWindow.pan.getRootThemeLabelLeftX();
                 y = MainWindow.pan.getRootThemeLabelTopY();
-                ThemeLabel themeLabel = new ThemeLabel(x - xShift * 2, y + yPlus, text, tabs);//特殊xShift
+                ThemeLabel themeLabel = new ThemeLabel(x - xShift * 3, y + yPlus, text, tabs, isChoosen);//特殊xShift
                 themeLabel.setBackground(new Color(250, 245, 228));
                 themeLabel.setForeground(new Color(18, 91, 80));
                 Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
@@ -161,7 +168,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
             else {
                 x = MainWindow.pan.getRootThemeLabelRightX();
                 y = MainWindow.pan.getRootThemeLabelTopY();
-                ThemeLabel themeLabel = new ThemeLabel(x + xShift, y + yPlus, text, tabs);
+                ThemeLabel themeLabel = new ThemeLabel(x + xShift, y + yPlus, text, tabs, isChoosen);
                 themeLabel.setBackground(new Color(250, 245, 228));
                 themeLabel.setForeground(new Color(18, 91, 80));
                 Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
@@ -188,7 +195,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
             if (distance < 0 || left) {
                 x = fatherLabel.getThemeLeftX();
                 y = fatherLabel.getThemeTopY();
-                ThemeLabel themeLabel = new ThemeLabel(x - xShift*2, y + yPlus, text, tabs);
+                ThemeLabel themeLabel = new ThemeLabel(x - xShift*2, y + yPlus, text, tabs, isChoosen);
                 themeLabel.setBackground(new Color(248, 180, 0));
                 themeLabel.setForeground(Color.white);
                 themeLabel.setFont(new Font("微软雅黑",Font.BOLD,26));
@@ -209,7 +216,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
             else {
                 x = fatherLabel.getThemeRightX();
                 y = fatherLabel.getThemeTopY();
-                ThemeLabel themeLabel = new ThemeLabel(x + xShift, y + yPlus, text, tabs);
+                ThemeLabel themeLabel = new ThemeLabel(x + xShift, y + yPlus, text, tabs, isChoosen);
                 themeLabel.setBackground(new Color(248, 180, 0));
                 themeLabel.setForeground(Color.white);
                 themeLabel.setFont(new Font("微软雅黑",Font.BOLD,26));
