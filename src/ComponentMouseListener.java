@@ -68,6 +68,11 @@ public class ComponentMouseListener implements MouseInputListener {
             else if(e.getClickCount() == 2){
                 new ThemeDetect(MainWindow.pan).deleteConnect(this.label);
                 ButtonMouseListener.fatherLabel=MainWindow.pan.getRootThemeLabel();
+                //×Ô¶¯ÅÅ°æ
+                Texts texts = new Texts();
+                MainWindow.pan.getRootThemeLabel().toTexts(texts, 0);
+                MainWindow.pan.clearConnectLine();
+                texts.toThemes();
             }
         }
     }
