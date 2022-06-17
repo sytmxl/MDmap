@@ -4,6 +4,7 @@ import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.Map;
+import java.util.Objects;
 
 public class ComponentMouseListener implements MouseInputListener {
     int startX = 0;
@@ -25,9 +26,11 @@ public class ComponentMouseListener implements MouseInputListener {
                     if(lastChooseLabel.getFather()== MainWindow.pan.getRootThemeLabel()){
                         Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
                         lastChooseLabel.setBorder(blackLine);
+                        lastChooseLabel.currentChoose=false;
                     }else{
                         Border noneLine = BorderFactory.createLineBorder(Color.black,0,true);
                         lastChooseLabel.setBorder(noneLine);
+                        lastChooseLabel.currentChoose=false;
                     }
                 }
                 if(label.getRank()==0){
@@ -40,7 +43,7 @@ public class ComponentMouseListener implements MouseInputListener {
                     Border blackLine = BorderFactory.createLineBorder(new Color(255, 99, 99),5,true);
                     label.setBorder(blackLine);
                 }
-
+                this.label.currentChoose=true;
                 lastChooseLabel=this.label;
             }else if(e.getClickCount() == 2){
                 for (Map.Entry<ThemeLabel, ConnectLine> item : MainWindow.pan.getallConnectLine().entrySet()) {
@@ -106,7 +109,7 @@ public class ComponentMouseListener implements MouseInputListener {
         }else if(rank==1){
             Border blackLine = BorderFactory.createLineBorder(new Color(159, 230, 160),5,true);
             this.label.setBorder(blackLine);
-            this.label.setForeground(new Color(159, 230, 160));
+            //this.label.setForeground(new Color(159, 230, 160));
         }else{
             this.label.setBackground(new Color(255, 210, 76));
         }
@@ -118,9 +121,16 @@ public class ComponentMouseListener implements MouseInputListener {
         if(rank==0){
             this.label.setBackground(new Color(255, 99, 99));
         }else if(rank==1){
-            this.label.setForeground(new Color(18, 91, 80));
-            Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
-            this.label.setBorder(blackLine);
+            if(this.label.isChoosen==true||this.label.currentChoose==true){
+                Border blackLine = BorderFactory.createLineBorder(new Color(159, 230, 160),5,true);
+                this.label.setBorder(blackLine);
+                //this.label.setForeground(new Color(159, 230, 160));
+            }else{
+                this.label.setForeground(new Color(18, 91, 80));
+                Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
+                this.label.setBorder(blackLine);
+            }
+
         }else{
             this.label.setBackground(new Color(248, 180, 0));
         }

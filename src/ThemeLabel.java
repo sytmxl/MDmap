@@ -8,6 +8,7 @@ public class ThemeLabel extends JLabel{
     int top = 100000;//在根结点中保存上边界
     int right = -100000;
     int bottom = -100000;
+    public boolean currentChoose = false;
     public boolean isChoosen = false;
     public int tabs;
     public float from;
