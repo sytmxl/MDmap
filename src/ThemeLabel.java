@@ -111,7 +111,7 @@ public class ThemeLabel extends JLabel{
         double englishSize = 18.0 / 25;
         int fontSize = this.getFont().getSize();
         if (fontSize == 26) {
-            chineseSize = 20.0 / 15;
+            chineseSize = 31.0/26;
             englishSize = 18.0 / 25;
         }
         if (fontSize == 28) {
@@ -121,7 +121,7 @@ public class ThemeLabel extends JLabel{
         if (count <6) {
             chineseSize = 20.0 / 15;
         }
-        if (count <2) {
+        if (count <=2) {
             chineseSize = 25.0 / 15;
         }
         if (str.length() - count <=6) {

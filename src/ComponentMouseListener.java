@@ -98,12 +98,32 @@ public class ComponentMouseListener implements MouseInputListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        int rank=this.label.getRank();
+        /**** 光标变为手型 ******/
+        this.label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        if(rank==0){
+            this.label.setBackground(new Color(255, 140, 140));
+        }else if(rank==1){
+            Border blackLine = BorderFactory.createLineBorder(new Color(159, 230, 160),5,true);
+            this.label.setBorder(blackLine);
+            this.label.setForeground(new Color(159, 230, 160));
+        }else{
+            this.label.setBackground(new Color(255, 210, 76));
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        int rank=this.label.getRank();
+        if(rank==0){
+            this.label.setBackground(new Color(255, 99, 99));
+        }else if(rank==1){
+            this.label.setForeground(new Color(18, 91, 80));
+            Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
+            this.label.setBorder(blackLine);
+        }else{
+            this.label.setBackground(new Color(248, 180, 0));
+        }
     }
 
     @Override
