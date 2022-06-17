@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Vector;
 public class ThemeLabel extends JLabel{
+    public boolean isChoosen = false;
     public int tabs;
     public float from;
     public float leftFrom;
@@ -53,9 +54,11 @@ public class ThemeLabel extends JLabel{
         this.addMouseMotionListener(componentMouseListener);
     }
 
-    public ThemeLabel(int x,int y, String text, int tabs){
+    public ThemeLabel(int x,int y, String text, int tabs, boolean isChoosen){
         super("",JLabel.CENTER);
         this.child = new Vector<ThemeLabel>();
+
+        this.isChoosen = isChoosen;
 
         this.ThemeLeftX = x;
         this.ThemeRightX = x + ThemeSizeX;
@@ -256,9 +259,7 @@ public class ThemeLabel extends JLabel{
         }
     }
     public void toTexts(Texts texts, int tabs) {
-        texts.list.add(new TabText(tabs, this.getText(), texts));
-        System.out.print(tabs);
-        System.out.println(this.getText());
+        texts.list.add(new TabText(tabs, this.getText(), texts, isChoosen));
         for (ThemeLabel themeLabel : child) {
             themeLabel.toTexts(texts, tabs+1);
         }

@@ -128,4 +128,21 @@ public class ComponentMouseListener implements MouseInputListener {
     public void mouseMoved(MouseEvent e) {
 
     }
+
+    public static void addBorder(ThemeLabel themeLabel) {
+        if (themeLabel==null) {//根结点时情况
+            Border blackLine = BorderFactory.createLineBorder(new Color(248, 180, 0),5,true);
+            MainWindow.pan.getRootThemeLabel().setBorder(blackLine);
+        }
+        else if(themeLabel.getRank()==0){
+            Border blackLine = BorderFactory.createLineBorder(new Color(248, 180, 0),5,true);
+            themeLabel.setBorder(blackLine);
+        }else if(themeLabel.getRank()==1){
+            Border blackLine = BorderFactory.createLineBorder(new Color(159, 230, 160),5,true);
+            themeLabel.setBorder(blackLine);
+        }else{
+            Border blackLine = BorderFactory.createLineBorder(new Color(255, 99, 99),5,true);
+            themeLabel.setBorder(blackLine);
+        }
+    }
 }

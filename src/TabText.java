@@ -5,6 +5,7 @@ import org.xmind.core.ITopic;
 import org.xmind.core.IWorkbook;
 
 public class TabText {
+    boolean isChoosen = false;
     int tabs;
     String content;
     Texts texts;
@@ -31,6 +32,16 @@ public class TabText {
         this.n=1;
         this.left=false;
         this.from = 0.1F;
+    }
+
+    public TabText(int tabs, String content, Texts texts, boolean isChoosen) {
+        this.tabs = tabs;
+        this.content = content;
+        this.texts = texts;
+        this.n=1;
+        this.left=false;
+        this.from = 0.1F;
+        this.isChoosen = isChoosen;
     }
 
     public ITopic toTopic(IWorkbook workbook) {
