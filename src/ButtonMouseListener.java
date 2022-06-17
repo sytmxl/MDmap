@@ -17,7 +17,8 @@ public class ButtonMouseListener implements ActionListener { //添加节点
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        fatherLabel=Constent.fatherLabel;
+        ThemeLabel fatherLabel=Constent.fatherLabel;
+        ThemeLabel themeLabel;
         if(fatherLabel!=null){
             System.out.println("father"+fatherLabel.LabelName);
         }else{
@@ -40,12 +41,12 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 nowmax=max+80;
             }
             y = nowmax;
-            ThemeLabel themeLabel = new ThemeLabel(x + 40, y);
+            themeLabel = new ThemeLabel(x + 40, y);
             themeLabel.setBackground(new Color(250, 245, 228));
             themeLabel.setForeground(new Color(18, 91, 80));
             Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
             themeLabel.setBorder(blackLine);
-            themeLabel.setFont(new Font("微软雅黑",Font.BOLD,40));
+            themeLabel.setFont(new Font("微软雅黑",Font.BOLD,28));
             MainWindow.pan.add(themeLabel);
             /******** 增加父子节点关联 ************/
             themeLabel.setFather(MainWindow.pan.getRootThemeLabel());
@@ -76,10 +77,10 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                     nowmax=max+40;
                 }
                 y = nowmax;
-                ThemeLabel themeLabel = new ThemeLabel(x - 40, y);
+                themeLabel = new ThemeLabel(x - 40, y);
                 themeLabel.setBackground(new Color(248, 180, 0));
                 themeLabel.setForeground(Color.white);
-                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,25));
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,26));
                 /******** 增加父子节点关联 ************/
                 themeLabel.setFather(fatherLabel);
                 fatherLabel.addChild(themeLabel);
@@ -105,10 +106,10 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                     nowmax=max+40;
                 }
                 y = nowmax;
-                ThemeLabel themeLabel = new ThemeLabel(x + 40, y);
+                themeLabel = new ThemeLabel(x + 40, y);
                 themeLabel.setBackground(new Color(248, 180, 0));
                 themeLabel.setForeground(Color.white);
-                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,25));
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,26));
                 /******** 增加父子节点关联 ************/
                 themeLabel.setFather(fatherLabel);
                 fatherLabel.addChild(themeLabel);
@@ -141,7 +142,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 themeLabel.setForeground(new Color(18, 91, 80));
                 Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
                 themeLabel.setBorder(blackLine);
-                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,40));
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,28));
                 MainWindow.pan.add(themeLabel);
                 /******** 增加父子节点关联 ************/
                 themeLabel.setFather(MainWindow.pan.getRootThemeLabel());
@@ -165,7 +166,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 themeLabel.setForeground(new Color(18, 91, 80));
                 Border blackLine = BorderFactory.createLineBorder(new Color(18, 91, 80),5,true);
                 themeLabel.setBorder(blackLine);
-                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,40));
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,28));
                 MainWindow.pan.add(themeLabel);
                 /******** 增加父子节点关联 ************/
                 themeLabel.setFather(MainWindow.pan.getRootThemeLabel());
@@ -190,7 +191,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 ThemeLabel themeLabel = new ThemeLabel(x - xShift*2, y + yPlus, text, tabs);
                 themeLabel.setBackground(new Color(248, 180, 0));
                 themeLabel.setForeground(Color.white);
-                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,25));
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,26));
                 MainWindow.pan.add(themeLabel);
                 /******** 增加父子节点关联 ************/
                 themeLabel.setFather(fatherLabel);
@@ -211,8 +212,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 ThemeLabel themeLabel = new ThemeLabel(x + xShift, y + yPlus, text, tabs);
                 themeLabel.setBackground(new Color(248, 180, 0));
                 themeLabel.setForeground(Color.white);
-                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,25));
-
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,26));
                 /******** 增加父子节点关联 ************/
                 themeLabel.setFather(fatherLabel);
                 fatherLabel.addChild(themeLabel);

@@ -9,7 +9,7 @@ public class Texts {
     List<TabText> list = new ArrayList<>();
 
     public int rootSplit() {
-        //è·å–çˆ¶èŠ‚ç‚¹ä¸ºæ ¹ç»“ç‚¹çš„TabTeståˆ—è¡¨
+        //»ñÈ¡¸¸½ÚµãÎª¸ù½áµãµÄTabTestÁĞ±í
         Stack<TabText> fatherList = new Stack<>();
         List<TabText> rootSideList = new ArrayList<>();
         TabText bufferTabText = null;
@@ -39,17 +39,17 @@ public class Texts {
             }
             bufferTabText = tabText;
         }
-        //01èƒŒåŒ…åˆ†åˆ—è¡¨ä¸ºä¸¤åˆ—ï¼Œåœ¨å·¦çš„å±æ€§leftæ ‡ture
-        int m = rootSideList.size();//è¿æ¥æ ¹çš„æ•°é‡ä¸ºç‰©å“æ•°é‡
-        int c = (root.n)/2;//ä¸­ä½çº¿ä¸ºèƒŒåŒ…å®¹ç§¯
+        //01±³°ü·ÖÁĞ±íÎªÁ½ÁĞ£¬ÔÚ×óµÄÊôĞÔleft±êture
+        int m = rootSideList.size();//Á¬½Ó¸ùµÄÊıÁ¿ÎªÎïÆ·ÊıÁ¿
+        int c = (root.n)/2;//ÖĞÎ»ÏßÎª±³°üÈİ»ı
         int [][] dp = new int[m+1][c+1];
 
-        for(int i = 1; i <= m; i++) {//åˆå§‹åŒ–
+        for(int i = 1; i <= m; i++) {//³õÊ¼»¯
             for (int j = 0; j <= c; j++) {
                 dp[i][j]=0;
             }
         }
-        for(int i = 1; i <= m; i++){//01èƒŒåŒ…
+        for(int i = 1; i <= m; i++){//01±³°ü
             for(int j = 0; j <= c; j++){
                 if(rootSideList.get(i-1).n <= j) {
                     if(dp[i-1][j]>dp[i-1][j-rootSideList.get(i-1).n]+rootSideList.get(i-1).n) dp[i][j] = dp[i-1][j];
@@ -61,7 +61,7 @@ public class Texts {
             }
         }
         int b = c;
-        for(int i = m; i >= 1; i--){//åˆ¤æ–­æ˜¯å¦é€‰ä¸­ï¼Œé€‰ä¸­çš„å»å·¦è¾¹
+        for(int i = m; i >= 1; i--){//ÅĞ¶ÏÊÇ·ñÑ¡ÖĞ£¬Ñ¡ÖĞµÄÈ¥×ó±ß
             if(dp[i][b] > dp[i - 1][b]){
                 rootSideList.get(i-1).left = true;
                 b -= rootSideList.get(i-1).n;
@@ -69,7 +69,7 @@ public class Texts {
         }
 
         int left = 0;
-        System.out.println("åˆ†ç¦»ç»“æœ: ");
+        System.out.println("·ÖÀë½á¹û: ");
         for (TabText tabText : rootSideList) {
             if (tabText.left) {
                 System.out.println(tabText.content);
@@ -83,7 +83,7 @@ public class Texts {
     public void toThemes() {
         int yGap = 100;
         int yShift = 0;
-        // è·å–æ¯ä¸ªæ ‡ç­¾æ‰€å åˆ—æ•°
+        // »ñÈ¡Ã¿¸ö±êÇ©ËùÕ¼ÁĞÊı
         TabText bufferTabText = null;
         Stack<TabText> tabTexts = new Stack<>();
         int chance = 1;
@@ -118,14 +118,14 @@ public class Texts {
             System.out.println("n: "+text.n+"from: "+text.from+" tabs: "+text.tabs+" content: "+text.content);
         }
 
-        int left = this.rootSplit();//æ ¹éƒ¨ç”¨01èƒŒåŒ…åˆ†æˆä¸¤éƒ¨åˆ†ï¼Œè¿”å›åå·¦è¾¹åˆ—æ•°
+        int left = this.rootSplit();//¸ù²¿ÓÃ01±³°ü·Ö³ÉÁ½²¿·Ö£¬·µ»Ø×ø×ó±ßÁĞÊı
 
         ThemeLabel bufferThemeLabel = null;
         ThemeLabel root = null;
         ButtonMouseListener.fatherLabel = null;
         Stack<ThemeLabel> fatherList = new Stack<>();
         for (TabText text : this.list){
-            if (ButtonMouseListener.fatherLabel == null) {//ç¬¬ä¸€ä¸ªï¼Œæ ¹ç»“ç‚¹
+            if (ButtonMouseListener.fatherLabel == null) {//µÚÒ»¸ö£¬¸ù½áµã
                 MainWindow.pan.getRootThemeLabel().setText(text.content);
                 bufferThemeLabel = MainWindow.pan.getRootThemeLabel();
                 bufferTabText = text;
@@ -143,7 +143,7 @@ public class Texts {
                 System.out.println("---------");
                 continue;
             }
-            if (text.tabs > bufferTabText.tabs) {//å½“å‰çº§æ•°å¤§äºä¸Šä¸ª
+            if (text.tabs > bufferTabText.tabs) {//µ±Ç°¼¶Êı´óÓÚÉÏ¸ö
                 if (bufferThemeLabel != root) {
                     bufferThemeLabel.from = bufferTabText.from;
                     fatherList.add(bufferThemeLabel);
@@ -156,7 +156,7 @@ public class Texts {
 
                 System.out.print("2 ");
             }
-            else if (text.tabs < bufferTabText.tabs) {//å½“å‰çº§æ•°å°äºä¸Šä¸ª
+            else if (text.tabs < bufferTabText.tabs) {//µ±Ç°¼¶ÊıĞ¡ÓÚÉÏ¸ö
                 while (text.tabs <= fatherList.peek().tabs){
                     //System.out.println("pop:"+fatherList.peek().getText());
                     fatherList.pop();
@@ -170,7 +170,7 @@ public class Texts {
                 System.out.print("0 ");
             }
 
-            if (text.left) {//åœ¨rootSplitä¸­å¯¹æ ¹ç»“ç‚¹çš„ç›´æ¥è‡ªç»“ç‚¹æœ‰ç‰¹æ®Šçš„leftFrom
+            if (text.left) {//ÔÚrootSplitÖĞ¶Ô¸ù½áµãµÄÖ±½Ó×Ô½áµãÓĞÌØÊâµÄleftFrom
                 yShift = (int) ((fatherList.peek().leftFrom + ((float) text.n - 1) / 2) * yGap);
             }
             else {

@@ -31,7 +31,6 @@ public class ThemeDetect {
         ThemeLabel root = this.pan.getRootThemeLabel();
         root.updateLocation(deltax + root.getX(), deltay + root.getY());
     }
-
     public void updateConnect(ThemeLabel themeLabel, int deltax, int deltay) {
 
         /*****遍历树更新主题后所有连接关系*********/

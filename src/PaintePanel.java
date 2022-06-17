@@ -16,11 +16,11 @@ class PaintePanel extends JPanel implements Runnable{
 
 
 
-        rootThemeLabel=new ThemeLabel(200,200);
+        rootThemeLabel=new ThemeLabel(600,400);
         rootThemeLabel.updateRankSize(0);
         rootThemeLabel.setBackground(new Color(255, 99, 99));
         rootThemeLabel.setForeground(Color.white);
-        rootThemeLabel.setFont(new Font("Î¢ÈíÑÅºÚ",Font.BOLD,46));
+        rootThemeLabel.setFont(new Font("Î¢ÈíÑÅºÚ",Font.BOLD,40));
         add(rootThemeLabel);
 
 

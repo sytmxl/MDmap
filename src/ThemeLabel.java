@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Vector;
@@ -18,8 +19,8 @@ public class ThemeLabel extends JLabel{
     public int LabelName;
 
     /********* 定位尺寸 ********/
-    private int ThemeSizeX = 110;
-    private int ThemeSizeY = 70;
+    private int ThemeSizeX = 80;
+    private int ThemeSizeY = 60;
     private int ThemeLeftX, ThemeRightX, ThemeMidY, ThemeTopY;
 
     /********* 节点删除 ********/
@@ -99,14 +100,14 @@ public class ThemeLabel extends JLabel{
             if (len.length() > 8)
                 count++;
         }
-        double chineseSize = 16.5/ 15;
-        double englishSize = 15.0 / 25;
+        double chineseSize = 20.0 / 15;
+        double englishSize = 18.0 / 25;
         int fontSize = this.getFont().getSize();
-        if (fontSize == 10) {
-            chineseSize = 18 / 15;
-            englishSize = 16.0 / 25;
+        if (fontSize == 26) {
+            chineseSize = 20.0 / 15;
+            englishSize = 18.0 / 25;
         }
-        if (fontSize == 15) {
+        if (fontSize == 28) {
             chineseSize = 17.5 / 15;
             englishSize = 16.0 / 25;
         }
@@ -116,18 +117,20 @@ public class ThemeLabel extends JLabel{
         if (count <2) {
             chineseSize = 25.0 / 15;
         }
-        if (str.length() - count <6) {
-            englishSize = 18.0 / 25;
+        if (str.length() - count <=6) {
+            englishSize = 25.0 / 25;
         }
         if (str.length() - count <2) {
-            englishSize = 30.0 / 25;
+            englishSize = 40.0 / 25;
         }
         if(this.rank==0){
-            x=1;
+            x=0;
         }else if(this.rank==1){
             x=0;
+        }else{
+            x=0;
         }
-        return (int) ((str.length() - count) * (fontSize * englishSize)) + (int) ((count+x) * (fontSize * chineseSize));
+        return (int) ((str.length() - count) * (fontSize * englishSize)) + (int) ((count) * (fontSize * chineseSize));
 
     }
     /******** 因为字长更新主题长度 ************/
@@ -145,19 +148,19 @@ public class ThemeLabel extends JLabel{
             this.ThemeRightX = this.getX() + this.ThemeSizeX;
             this.setBounds(this.getX(), this.getY(), this.ThemeSizeX, this.ThemeSizeY);
         }
-
+        this.setFont(new Font("微软雅黑",Font.BOLD,this.getFont().getSize()));
     }
     /******** 因为等级更新主题长度 ************/
     public void updateRankSize(int rank){
         if(rank==0){
-            this.ThemeSizeY+=40;
-            this.ThemeSizeX+=100;
+            this.ThemeSizeY+=25;
+            this.ThemeSizeX+=60;
             this.ThemeRightX = this.getX() + ThemeSizeX;
             this.ThemeMidY = this.getY() + ThemeSizeY / 2;
         }
-        else if(rank == 1){
-            this.ThemeSizeY+=20;
-            this.ThemeSizeX+=60;
+        else if(rank == 1) {
+            this.ThemeSizeY+=10;
+            this.ThemeSizeX += 60;
             this.ThemeRightX = this.getX() + ThemeSizeX;
             this.ThemeMidY = this.getY() + ThemeSizeY / 2;
         }
