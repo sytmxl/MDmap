@@ -273,6 +273,7 @@ public class ThemeLabel extends JLabel{
         texts.list.add(new TabText(tabs, this.getText(), texts, isChoosen));
         for (ThemeLabel themeLabel : child) {
             themeLabel.toTexts(texts, tabs+1);
+            themeLabel.setFont(new Font("微软雅黑",Font.BOLD,themeLabel.getFont().getSize()));
         }
     }
 

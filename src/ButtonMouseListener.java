@@ -133,6 +133,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
         Constent.fatherLabel = fatherLabel = ComponentMouseListener.lastChooseLabel = chosenLabel;
         ComponentMouseListener.addBorder(chosenLabel);
         chosenLabel.isChoosen = false;
+        chosenLabel.setFont(new Font("微软雅黑",Font.BOLD, chosenLabel.getFont().getSize()));
     }
 
     static public ThemeLabel add(String text, int tabs, int yPlus, boolean left, boolean isChoosen){
@@ -156,6 +157,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 /******** 设置主题等级 ************/
                 themeLabel.setRank(1);
                 themeLabel.updateRankSize(themeLabel.getRank());
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,28));
                 MainWindow.pan.add(themeLabel);
                 /******** 增加连线 ************/
                 themeLabel.updateSize();
@@ -180,6 +182,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 /******** 设置主题等级 ************/
                 themeLabel.setRank(1);
                 themeLabel.updateRankSize(themeLabel.getRank());
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,28));
                 MainWindow.pan.add(themeLabel);
                 /******** 增加连线 ************/
                 themeLabel.updateSize();
@@ -204,6 +207,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 /******** 设置主题等级 ************/
                 themeLabel.setRank(fatherLabel.getRank() + 1);
                 themeLabel.updateRankSize(themeLabel.getRank());
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,26));
                 MainWindow.pan.add(themeLabel);
                 /******** 增加父子节点连接线 ************/
                 themeLabel.updateSize();
@@ -224,6 +228,7 @@ public class ButtonMouseListener implements ActionListener { //添加节点
                 /******** 设置主题等级 ************/
                 themeLabel.setRank(fatherLabel.getRank() + 1);
                 themeLabel.updateRankSize(themeLabel.getRank());
+                themeLabel.setFont(new Font("微软雅黑",Font.BOLD,26));
                 MainWindow.pan.add(themeLabel);
                 /******** 增加父子节点连接线 ************/
                 themeLabel.updateSize();
