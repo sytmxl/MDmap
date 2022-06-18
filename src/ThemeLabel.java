@@ -46,7 +46,7 @@ public class ThemeLabel extends JLabel{
 
         this.LabelName=names;
         names++;
-
+        this.setFont(Font.getFont("微软雅黑"));
         this.setText("text");
         this.setBounds(x, y, this.ThemeSizeX, this.ThemeSizeY);
 
@@ -79,7 +79,7 @@ public class ThemeLabel extends JLabel{
         this.ThemeMidY = y;
 
          */
-
+        this.setFont(Font.getFont("微软雅黑"));
         this.LabelName=names;
         names++;
 

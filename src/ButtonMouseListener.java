@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
 
 public class ButtonMouseListener implements ActionListener { //添加节点
     public static ThemeLabel fatherLabel=null;//初始化设成根节点,每次点击完也设成根节点
@@ -134,8 +135,15 @@ public class ButtonMouseListener implements ActionListener { //添加节点
         ComponentMouseListener.addBorder(chosenLabel);
         chosenLabel.isChoosen = false;
         chosenLabel.setFont(new Font("微软雅黑",Font.BOLD, chosenLabel.getFont().getSize()));
+        setEveryFont(MainWindow.pan.getRootThemeLabel());
     }
-
+    static public void setEveryFont(ThemeLabel fatherLabel){
+        Vector<ThemeLabel> child=fatherLabel.getallChild();
+        for (ThemeLabel themeLabel:child){
+            themeLabel.setFont(new Font("微软雅黑",Font.BOLD, themeLabel.getFont().getSize()));
+            setEveryFont(themeLabel);
+        }
+    }
     static public ThemeLabel add(String text, int tabs, int yPlus, boolean left, boolean isChoosen){
         int x,y;
         int xShift = 100;
