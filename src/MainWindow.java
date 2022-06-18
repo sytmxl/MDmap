@@ -108,13 +108,14 @@ public class MainWindow {
         button.setActionCommand(action);
         button.setToolTipText(toolText);
         button.setFocusable(false);
+
         button.setBackground(Color.white);
        // button.setSize(30,30);
         //…Ë÷√Õº±Í
         int width = 40,height = 40;
         ImageIcon image = new ImageIcon(url);
 
-        image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
+        image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_SMOOTH ));
       //  button.setIcon(new ImageIcon(url));
         button.setIcon(image);
         button.setSize(width, height);

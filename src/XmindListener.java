@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -15,10 +16,14 @@ public class XmindListener implements ActionListener {
     private JFileChooser fileChooser;
     public XmindListener(){
         this.fileChooser =new JFileChooser();
+        fileChooser.setSelectedFile(new File("untitle.xmind"));
+        String saveType[] = {"xmind"};
+        fileChooser.setFileFilter(new FileNameExtensionFilter("xmind", saveType));
     }
     public void actionPerformed(ActionEvent e){
         File file =null;
         int result =0;
+
         result =fileChooser.showSaveDialog(MainWindow.frame);
         if(result == JFileChooser.APPROVE_OPTION) {//选择了确定键
             file = fileChooser.getSelectedFile();
