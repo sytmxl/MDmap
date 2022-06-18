@@ -13,8 +13,6 @@ public class ButtonMouseListener implements ActionListener { //Ìí¼Ó½Úµã
     public static void setFatherLabel(ThemeLabel themeLabel){
         fatherLabel=themeLabel;
     }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         ThemeLabel fatherLabel=Constent.fatherLabel;

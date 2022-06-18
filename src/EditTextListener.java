@@ -6,7 +6,10 @@ import java.util.Map;
 public class EditTextListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        ThemeLabel label=ButtonMouseListener.fatherLabel;
+        ThemeLabel label=Constent.fatherLabel;
+        if(label==null){
+            label=MainWindow.pan.getRootThemeLabel();
+        }
         for (Map.Entry<ThemeLabel, ConnectLine> item : MainWindow.pan.getallConnectLine().entrySet()) {
             ThemeLabel key = item.getKey();
             key.getMyThemeFrame().setVisible(false);

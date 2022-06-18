@@ -123,7 +123,7 @@ public class ThemeLabel extends JLabel{
             chineseSize = 20.0 / 15;
         }
         if (count <=2) {
-            chineseSize = 25.0 / 15;
+            chineseSize = 60/15;
         }
         if (str.length() - count <=6) {
             englishSize = 25.0 / 25;
