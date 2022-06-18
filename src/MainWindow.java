@@ -114,7 +114,7 @@ public class MainWindow {
         int width = 40,height = 40;
         ImageIcon image = new ImageIcon(url);
 
-        image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
+        image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_SMOOTH ));
       //  button.setIcon(new ImageIcon(url));
         button.setIcon(image);
         button.setSize(width, height);
