@@ -122,7 +122,10 @@ public class ThemeLabel extends JLabel{
         if (count <6) {
             chineseSize = 20.0 / 15;
         }
-        if (count <=2) {
+        if(count<=2){
+            chineseSize = 30/15;
+        }
+        if (count <=1) {
             chineseSize = 60/15;
         }
         if (str.length() - count <=6) {

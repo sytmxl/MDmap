@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,7 +15,7 @@ public class ThemeFrameActionListener implements ActionListener {
             int deltaSizex=from.getowner().getNewLength()-from.getowner().getThemeSizeX();
             from.getowner().updateSize();
             new ThemeDetect(MainWindow.pan).themesizeChangeMove(from.getowner(),deltaSizex);
-
+            from.getowner().setFont(new Font("Î¢ÈíÑÅºÚ",Font.BOLD,from.getowner().getFont().getSize()));
         }
         else if(e.getSource() ==from.getButton2()) {
 
