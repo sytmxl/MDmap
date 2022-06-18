@@ -108,6 +108,7 @@ public class MainWindow {
         button.setActionCommand(action);
         button.setToolTipText(toolText);
         button.setFocusable(false);
+
         button.setBackground(Color.white);
        // button.setSize(30,30);
         //…Ë÷√Õº±Í

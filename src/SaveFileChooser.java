@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -7,6 +8,9 @@ public class SaveFileChooser implements ActionListener {
     private JFileChooser fileChooser;
     public SaveFileChooser(){
         this.fileChooser =new JFileChooser();
+        fileChooser.setSelectedFile(new File("untitle.md"));
+        String saveType[] = {"md"};
+        fileChooser.setFileFilter(new FileNameExtensionFilter("md", saveType));
     }
     public void actionPerformed(ActionEvent e){
         File file =null;
