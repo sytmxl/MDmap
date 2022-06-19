@@ -51,6 +51,7 @@ public class XmindListener implements ActionListener {
 
     void saveFile(File file) throws IOException, CoreException {
         Texts texts = new Texts();
+        Texts.n = 0;
         MainWindow.pan.getRootThemeLabel().toTexts(texts, 0);
         // get workbook
         IWorkbookBuilder workbookBuilder = Core.getWorkbookBuilder();
