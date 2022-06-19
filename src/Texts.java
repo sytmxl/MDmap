@@ -201,6 +201,7 @@ public class Texts {
         //Constent.paintPanelHight = root.bottom-root.top + 600;//update pan size
         //Constent.paintPanelWidth = root.right-root.left + 600;
 
+        ButtonMouseListener.setEveryFont(MainWindow.pan.getRootThemeLabel());
         return chosenLabel;
     }
 }

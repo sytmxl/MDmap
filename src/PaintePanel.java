@@ -69,6 +69,7 @@ class PaintePanel extends JPanel implements Runnable{
                 }
             }
         }
+        ButtonMouseListener.setEveryFont(MainWindow.pan.getRootThemeLabel());
 
     }
     public JScrollPane getScrollPane() {

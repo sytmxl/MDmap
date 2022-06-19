@@ -138,7 +138,9 @@ public class ButtonMouseListener implements ActionListener { //Ìí¼Ó½Úµã
         setEveryFont(MainWindow.pan.getRootThemeLabel());
     }
     static public void setEveryFont(ThemeLabel fatherLabel){
+       // MainWindow.pan.getRootThemeLabel().setFont(new Font("Î¢ÈíÑÅºÚ",Font.BOLD,  MainWindow.pan.getRootThemeLabel().getFont().getSize()));
         Vector<ThemeLabel> child=fatherLabel.getallChild();
+        fatherLabel.setFont(new Font("Î¢ÈíÑÅºÚ",Font.BOLD, fatherLabel.getFont().getSize()));
         for (ThemeLabel themeLabel:child){
             themeLabel.setFont(new Font("Î¢ÈíÑÅºÚ",Font.BOLD, themeLabel.getFont().getSize()));
             setEveryFont(themeLabel);

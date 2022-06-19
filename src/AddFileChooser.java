@@ -27,6 +27,7 @@ public class AddFileChooser implements ActionListener {
             if(file!=null) {
                 try {
                     loadFile(file);//为加载文件的功能函数
+                    ButtonMouseListener.setEveryFont(MainWindow.pan.getRootThemeLabel());
                 } catch (FileNotFoundException ex) {
                     throw new RuntimeException(ex);
                 } catch (IOException | CoreException ex) {
