@@ -112,10 +112,8 @@ public class Texts {
             bufferTabText = tabText;
         }
 
-        System.out.println("n:");
         for (TabText text : this.list){
             text.from = (float) -(text.n - 1)/2;
-            System.out.println("n: "+text.n+"from: "+text.from+" tabs: "+text.tabs+" content: "+text.content);
         }
 
         int left = this.rootSplit();//??????01???????????????????????????
@@ -138,11 +136,6 @@ public class Texts {
                 fatherList.add(bufferThemeLabel);
                 root = bufferThemeLabel;
 
-                System.out.println("---------");
-                System.out.println("1");
-                System.out.println("leftFrom: "+ bufferThemeLabel.leftFrom);
-                System.out.println("from: "+ bufferThemeLabel.from);
-                System.out.println("---------");
                 continue;
             }
             if (text.tabs > bufferTabText.tabs) {//??????????????
@@ -151,25 +144,13 @@ public class Texts {
                     fatherList.add(bufferThemeLabel);
                     ButtonMouseListener.fatherLabel = fatherList.peek();
                 }
-                else {
-                    System.out.println("skip for root");
-                }
-                //System.out.println("add:"+fatherList.peek().getText());
-
-                System.out.print("2 ");
             }
             else if (text.tabs < bufferTabText.tabs) {//???????§³?????
                 while (text.tabs <= fatherList.peek().tabs){
-                    //System.out.println("pop:"+fatherList.peek().getText());
                     fatherList.pop();
                 }
 
                 ButtonMouseListener.fatherLabel = fatherList.peek();
-
-                System.out.print("3 ");
-            }
-            else {
-                System.out.print("0 ");
             }
 
             if (text.left) {//??rootSplit?§Ø????????????????????leftFrom
@@ -180,11 +161,9 @@ public class Texts {
             }
 
             if (text.left) {
-                System.out.println(text.content+" leftFrom: "+fatherList.peek().leftFrom + " n:"+text.n + " yShift:"+yShift);
                 fatherList.peek().leftFrom += text.n;
             }
             else {
-                System.out.println(text.content+" from:" + fatherList.peek().from + " n:"+text.n + " yShift:"+yShift);
                 fatherList.peek().from += text.n;
             }
             bufferThemeLabel = ButtonMouseListener.add(text.content, text.getTabs(), yShift, text.left, text.isChoosen);
@@ -197,9 +176,6 @@ public class Texts {
         root.getRange();// cal the range
         if (root.left < 100 || root.top < 100)
             new ThemeDetect(MainWindow.pan).moveAll(-root.left + 100, -root.top + 100);// move according to range(to left top corner)
-
-        //Constent.paintPanelHight = root.bottom-root.top + 600;//update pan size
-        //Constent.paintPanelWidth = root.right-root.left + 600;
 
         ButtonMouseListener.setEveryFont(MainWindow.pan.getRootThemeLabel());
         return chosenLabel;

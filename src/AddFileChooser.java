@@ -70,8 +70,7 @@ public class AddFileChooser implements ActionListener {
                 //md文本语法分析
                 if (Pattern.compile("^\\s*$").matcher(content).matches() ||
                         Pattern.compile("^\\s*!\\[").matcher(content).find() || code) {
-                    //System.out.println("blank");
-                    content = in.readLine();
+                        content = in.readLine();
                     continue;
                 }
 
@@ -91,20 +90,16 @@ public class AddFileChooser implements ActionListener {
                 Matcher matcher3 = Pattern.compile("^\\s*\\* ").matcher(content);
 
                 if (matcher1.find()) {
-                    System.out.println((last + matcher1.end()) + " " + content.substring(matcher1.end()));
                     texts.list.add(new TabText(last + matcher1.end(), content.substring(matcher1.end()), texts));
                 }
                 else if (matcher2.find()) {
-                    System.out.println((matcher2.end() - 2) + " " + content.substring(matcher2.end()));
                     texts.list.add(new TabText(matcher2.end() - 2, content.substring(matcher2.end()), texts));
                     last = matcher2.end() - 2;
                 }
                 else if (matcher3.find()) {
-                    System.out.println((last + matcher3.end()) + " " + content.substring(matcher3.end()));
                     texts.list.add(new TabText(last + matcher3.end(), content.substring(matcher3.end()), texts));
                 }
                 else {
-                    System.out.println((last + 1) + " " + content);
                     texts.list.add(new TabText(last + 1, content, texts));
                 }
                 content = in.readLine();

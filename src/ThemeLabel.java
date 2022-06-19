@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Vector;
 public class ThemeLabel extends JLabel{
+    int depth=0;
+    int leaves=0;
     int left = 100000;//在根结点中保存左边界
     int top = 100000;//在根结点中保存上边界
     int right = -100000;
@@ -240,32 +242,26 @@ public class ThemeLabel extends JLabel{
         this.rank=rank;
     }
 
-    public void toText(BufferedWriter out, String level, String fatherLevel) throws IOException {
-
-        if (this.child.size() == 0 && !fatherLevel.endsWith("- ")) {//最低的
+    public void toText(BufferedWriter out, String level, String fatherLevel, int depth) throws IOException {
+        if (this.child.size() == 0 && !fatherLevel.endsWith("- ") && !level.endsWith("##")) {//最低的
+            out.write('\n');
             out.write(this.getText() + '\n');
         }
         else {
-            out.write(level + " "+this.getText() + '\n');
-        }
-
-
-        if (level.equals("##")) {
-            //out.write("---"+'\n');
-            //out.write("---"+'\n');
+            out.write(level + " " + this.getText() + '\n');
         }
 
         for (ThemeLabel label : child) {
             if(level.endsWith("#")) {
-                if(level.length()<=2) {
-                    label.toText(out, level+"#", level);
+                if(level.length() <= depth) {
+                    label.toText(out, level+"#", level, depth);
                 }
                 else {
-                    label.toText(out, "- ", level);
+                    label.toText(out, "- ", level, depth);
                 }
             }
             else { // 超过界限使用点层次
-                label.toText(out, "  " + level, level);
+                label.toText(out, "  " + level, level, depth);
             }
         }
     }
@@ -305,6 +301,30 @@ public class ThemeLabel extends JLabel{
         }
         for (ThemeLabel themeLabel : child) {
             themeLabel.getRange();
+        }
+    }
+
+    public void getDepth(int depth) {
+        this.depth = depth;
+        for (ThemeLabel themeLabel : child) {
+            themeLabel.getDepth(depth+1);
+        }
+    }
+
+    public int getLeafDepthSum() {
+        if (this == MainWindow.pan.getRootThemeLabel()) {
+            leaves = 0;
+        }
+        if (child.size()==0) {
+            MainWindow.pan.getRootThemeLabel().leaves++;
+            return depth;
+        }
+        else {
+            int sum=0;
+            for (ThemeLabel themeLabel : child) {
+                sum += themeLabel.getLeafDepthSum();
+            }
+            return sum;
         }
     }
 }

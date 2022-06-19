@@ -43,7 +43,28 @@ public class SaveFileChooser implements ActionListener {
     void saveFile(File file) throws IOException{
         FileWriter fw = new FileWriter(file);
         BufferedWriter out = new BufferedWriter(fw);
-        MainWindow.pan.getRootThemeLabel().toText(out, "#", "");
+
+        //层次检测，通过层次选择层次排版深度
+        MainWindow.pan.getRootThemeLabel().getDepth(0);
+        float depth = MainWindow.pan.getRootThemeLabel().getLeafDepthSum();
+        System.out.println("sum: "+ depth);
+        depth /= MainWindow.pan.getRootThemeLabel().leaves;
+        System.out.println("num: "+ MainWindow.pan.getRootThemeLabel().leaves);
+        System.out.println("avg: "+ depth);
+        if (depth > 4) {
+            depth = 2;
+        }
+        else if (depth > 2.5) {
+            depth = 2;
+        }
+        else if (depth > 1){
+            depth = 1;
+        }
+        else {
+            depth = 0;
+        }
+        MainWindow.pan.getRootThemeLabel().toText(out, "#", "", (int)depth);
+
         out.flush();
         out.close();
     }
