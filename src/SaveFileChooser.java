@@ -43,7 +43,7 @@ public class SaveFileChooser implements ActionListener {
     void saveFile(File file) throws IOException{
         FileWriter fw = new FileWriter(file);
         BufferedWriter out = new BufferedWriter(fw);
-        MainWindow.pan.getRootThemeLabel().toText(out, "#");
+        MainWindow.pan.getRootThemeLabel().toText(out, "#", "");
         out.flush();
         out.close();
     }

@@ -240,32 +240,32 @@ public class ThemeLabel extends JLabel{
         this.rank=rank;
     }
 
-    public void toText(BufferedWriter out, String level) throws IOException {
-        /*
-        if (this.child.size() == 0 && level.endsWith("###")) {//最低的
+    public void toText(BufferedWriter out, String level, String fatherLevel) throws IOException {
+
+        if (this.child.size() == 0 && !fatherLevel.endsWith("- ")) {//最低的
             out.write(this.getText() + '\n');
         }
-        else if (this.child.size() == 0 && level.endsWith("- ")) {
-            out.write(level + this.getText() + '\n');
+        else {
+            out.write(level + " "+this.getText() + '\n');
         }
 
-         */
+
         if (level.equals("##")) {
             //out.write("---"+'\n');
             //out.write("---"+'\n');
         }
-        out.write(level + " "+this.getText() + '\n');
+
         for (ThemeLabel label : child) {
             if(level.endsWith("#")) {
                 if(level.length()<=2) {
-                    label.toText(out, level+"#");
+                    label.toText(out, level+"#", level);
                 }
                 else {
-                    label.toText(out, "- ");
+                    label.toText(out, "- ", level);
                 }
             }
             else { // 超过界限使用点层次
-                label.toText(out, "  " + level);
+                label.toText(out, "  " + level, level);
             }
         }
     }
