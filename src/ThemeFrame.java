@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class ThemeFrame extends JFrame {
@@ -16,31 +17,42 @@ public class ThemeFrame extends JFrame {
                 (Constent.frameHeight - Constent.themeFrameHeight) / 2);
         this.setTitle("编辑");
         this.setLayout(null);
-        this.setBackground(Color.CYAN);
+        this.getContentPane().setBackground(new Color(252, 248, 232));
 
-        Font myFont = new Font("黑体", Font.BOLD, 30);
+        Font myFont = new Font("黑体", Font.BOLD, 20);
         JPanel pan1 = new JPanel();
-        pan1.setBounds(0, 0, 580, 50);
+        pan1.setBounds(50, 50, 480, Constent.themeFrameHeight/2);
         //主题显示内容修改文本框的大小、内容、边框设置
-        pan1.setBorder(BorderFactory.createTitledBorder("标签内容"));
+        //pan1.setBorder(BorderFactory.createTitledBorder("标签内容"));
         pan1.setLayout(new GridLayout(1, 1));
+        pan1.setBackground(new Color(252, 248, 232));
         input = new JTextField("主题");
+        input.setFont(new Font("微软雅黑",Font.BOLD,30));
         pan1.add(input);
-
         //确认按钮的大小、内容、边框设置
         button1 = new JButton("确定");
-        button1.setBounds(180, 300, 100, 40);
+        button1.setBounds(170, 280, 100, 40);
         button1.setBorder(BorderFactory.createRaisedBevelBorder());
         button1.setFont(myFont);
+        button1.setForeground(new Color(39, 60, 44));
         button1.addActionListener(new ThemeFrameActionListener(this));
-
+        /*Border originBorder=BorderFactory.createLineBorder(new Color(236, 179, 144), 1);
+        button1.setBorder(originBorder);
+        button1.setBackground(new Color(236, 179, 144));
+        button1.setOpaque(true);
+        button1.setBorderPainted(false);*/
         //取消按钮的大小、内容、边框设置
         button2 = new JButton("取消");
-        button2.setBounds(320, 300, 100, 40);
+        button2.setBounds(310, 280, 100, 40);
         button2.setBorder(BorderFactory.createRaisedBevelBorder());
         button2.setFont(myFont);
         button2.addActionListener(new ThemeFrameActionListener(this));
-
+        button2.setForeground(new Color(39, 60, 44));
+        /*button2.addActionListener(new ThemeFrameActionListener(this));
+        button2.setBorder(originBorder);
+        button2.setBackground(new Color(236, 179, 144));
+        button2.setOpaque(true);
+        button2.setBorderPainted(false);*/
         this.add(pan1);
         this.add(button1);
         this.add(button2);
